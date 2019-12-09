@@ -4,10 +4,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="FirstOpMode233", group="Linear Opmode")
+@TeleOp(name="FirstOpMode255", group="Linear Opmode")
 public class FirstOpMode extends LinearOpMode{
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -21,21 +22,25 @@ public class FirstOpMode extends LinearOpMode{
         telemetry.addData("Status1", "Initialized");
         telemetry.update();
 
+        telemetry.addData("HardwareMap", hardwareMap.size());
+        telemetry.update();
+
+
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        MotorFl = hardwareMap.dcMotor.get("Motor_FL");
-        MotorFr = hardwareMap.dcMotor.get("Motor_FR");
-        MotorBl = hardwareMap.dcMotor.get("Motor_BL");
-        MotorBr = hardwareMap.dcMotor.get("Motor_BR");
+        //MotorFl = hardwareMap.dcMotor.get("Motor_FL");
+        //MotorFr = hardwareMap.dcMotor.get("Motor_FR");
+        // MotorBl = hardwareMap.dcMotor.get("Motor_BL");
+        // MotorBr = hardwareMap.dcMotor.get("Motor_BR");
 
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
-        MotorFl.setDirection(DcMotor.Direction.FORWARD);
-        MotorFr.setDirection(DcMotor.Direction.FORWARD);
-        MotorBl.setDirection(DcMotor.Direction.FORWARD);
-        MotorBr.setDirection(DcMotor.Direction.FORWARD);
+        // MotorFl.setDirection(DcMotor.Direction.FORWARD);
+        // MotorFr.setDirection(DcMotor.Direction.FORWARD);
+        // MotorBl.setDirection(DcMotor.Direction.FORWARD);
+        // MotorBr.setDirection(DcMotor.Direction.FORWARD);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -45,8 +50,8 @@ public class FirstOpMode extends LinearOpMode{
         while (opModeIsActive()) {
 
             // Setup a variable for each drive wheel to save power level for telemetry
-            double leftPower = 1.0;
-            double rightPower = -1.0;
+          //  double leftPower = 1.0;
+           // double rightPower = -1.0;
 
             // Choose to drive using either Tank Mode, or POV Mode
             // Comment out the method that's not used.  The default below is POV.
@@ -64,13 +69,122 @@ public class FirstOpMode extends LinearOpMode{
             // rightPower = -gamepad1.right_stick_y ;
 
             // Send calculated power to wheels
-            MotorFl.setPower(leftPower);
-            MotorFr.setPower(rightPower);
-            MotorBl.setPower(leftPower);
-            MotorBr.setPower(rightPower);
+           // MotorFl.setPower(leftPower);
+            //MotorFr.setPower(rightPower);
+            //MotorBl.setPower(leftPower);
+            //MotorBr.setPower(rightPower);
+
+
+            Robot robot = new Robot(hardwareMap, telemetry);
+           // gamepad1 = new Gamepad();
+            if (this.gamepad1.right_stick_y > 0.5) {
+                telemetry.addData("Game pad 1Moving", "Backward");
+                telemetry.update();
+                robot.moveB(1);
+                telemetry.addData("Moving Complete", "Backward");
+                telemetry.update();
+            }
+           // gamepad2 = new Gamepad();
+            if (this.gamepad2.right_stick_y > 0.5) {
+                telemetry.addData("Moving", "Backward");
+                telemetry.update();
+                robot.moveB(1);
+                telemetry.addData("Moving Complete", "Backward");
+                telemetry.update();
+            }
+
+            if (this.gamepad1.right_stick_y < -0.5) {
+                telemetry.addData("Moving", "Forward");
+                telemetry.update();
+                robot.moveF(1);
+                telemetry.addData("Moving Complete", "Backward");
+                telemetry.update();
+            }
+
+            if (this.gamepad2.right_stick_y < -0.5) {
+                telemetry.addData("Moving", "Forward");
+                telemetry.update();
+                robot.moveF(1);
+                telemetry.addData("Moving Complete", "Backward");
+                telemetry.update();
+            }
+
+            if (this.gamepad1.right_stick_x > 0.5) {
+                telemetry.addData("Moving", "Right");
+                telemetry.update();
+                robot.moveR(1);
+                telemetry.addData("Moving Complete", "Backward");
+                telemetry.update();
+            }
+
+            if (this.gamepad2.right_stick_x > 0.5) {
+                telemetry.addData("Moving", "Right");
+                telemetry.update();
+                robot.moveR(1);
+                telemetry.addData("Moving Complete", "Backward");
+                telemetry.update();
+            }
+
+            if (this.gamepad1.right_stick_x < -0.5) {
+                telemetry.addData("Moving", "Left");
+                telemetry.update();
+                robot.moveL(1);
+                telemetry.addData("Moving Complete", "Backward");
+                telemetry.update();
+            }
+
+            if (this.gamepad2.right_stick_x < -0.5) {
+                telemetry.addData("Moving", "Left");
+                telemetry.update();
+                robot.moveL(1);
+                telemetry.addData("Moving Complete", "Backward");
+                telemetry.update();
+            }
+            /*
+            robot.moveF(4);
+            try {
+                Thread.sleep(10000);
+            } catch (Exception ex) {
+                telemetry.addData("SLEEP", "Run Time: " + runtime.toString());
+                telemetry.update();
+
+               // break;
+            }
+            robot.moveR(4);
+            try {
+                Thread.sleep(10000);
+            } catch (Exception ex) {
+                telemetry.addData("SLEEP R", "Run Time: " + runtime.toString());
+                telemetry.update();
+
+                // break;
+            }
+            robot.moveB(4);
+            try {
+                Thread.sleep(10000);
+            } catch (Exception ex) {
+                telemetry.addData("SLEEP B", "Run Time: " + runtime.toString());
+                telemetry.update();
+
+                // break;
+            }
+            robot.moveL(4);
+            try {
+                Thread.sleep(10000);
+            } catch (Exception ex) {
+                telemetry.addData("SLEEP L", "Run Time: " + runtime.toString());
+                telemetry.update();
+
+                // break;
+            }
+
+             */
+           // robot.moveR(10);
+           // robot.moveB(10);
+            //robot.moveL(10);
 
             // Show the elapsed game time and wheel power.
-            telemetry.addData("Status1", "Run Time: " + runtime.toString());
+            telemetry.addData("Status3", "Run Time: " + runtime.toString());
             telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
             telemetry.update();
         }

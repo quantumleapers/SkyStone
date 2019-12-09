@@ -9,14 +9,21 @@ import com.qualcomm.robotcore.hardware.Gyroscope;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-
-public class Robot extends java.lang.Thread {
+public class Robot  extends java.lang.Thread {
 
     public DcMotor Motor_FL;
     public DcMotor Motor_FR;
     public DcMotor Motor_BR;
     public DcMotor Motor_BL;
+    public HardwareMap hardwareMap;
+    public Telemetry telemetry;
+    public int movementFactor = 20;
+    public boolean isTeleOp = true;
+    public DcMotor Slide_R;
+    public DcMotor Slide_L;
+    public CRServo pincher;
 
 
     Robot(HardwareMap map, Telemetry tel) {
@@ -48,7 +55,7 @@ public class Robot extends java.lang.Thread {
         Motor_FR.setPower(0);
         Motor_BR.setPower(0);
         Motor_BL.setPower(0);
-        telemetry.addData("Direction", "Forward");
+        telemetry.addData("Direction", "Backward");
         telemetry.update();
         if (isTeleOp == false) pause(250);
     }
@@ -66,12 +73,13 @@ public class Robot extends java.lang.Thread {
         Motor_FR.setPower(0);
         Motor_BR.setPower(0);
         Motor_BL.setPower(0);
-        telemetry.addData("Direction", "Backward");
+        telemetry.addData("Direction", "FORWARD");
         telemetry.update();
         if (isTeleOp == false) pause(250);
+
     }
 
-    public void moveR(long distance) {
+    public void moveL(long distance) {
         double power = 0.8;
 
         Motor_FL.setPower(power );
@@ -91,7 +99,7 @@ public class Robot extends java.lang.Thread {
         if (isTeleOp == false) pause(250);
     }
 
-    public void moveL(long distance) {
+    public void moveR(long distance) {
         double power = 0.8;
 
         Motor_FL.setPower((-1) * power);
@@ -118,15 +126,15 @@ public class Robot extends java.lang.Thread {
         telemetry.update();
 
         //Wheels
-        Motor_FL = hardwareMap.get(DcMotor.class, "motor_br");
-        Motor_FR = hardwareMap.get(DcMotor.class, "motor_bl");
-        Motor_BR = hardwareMap.get(DcMotor.class, "motor_fr");
-        Motor_BL = hardwareMap.get(DcMotor.class, "motor_fl");
+        Motor_FL = hardwareMap.get(DcMotor.class, "Motor_FL");
+        Motor_FR = hardwareMap.get(DcMotor.class, "Motor_FR");
+        Motor_BR = hardwareMap.get(DcMotor.class, "Motor_BR");
+        Motor_BL = hardwareMap.get(DcMotor.class, "Motor_BL");
 
-        Slide_R = hardwareMap.get(DcMotor.class, "slide_r");
-        Slide_L = hardwareMap.get(DcMotor.class, "slide_l");
+     //   Slide_R = hardwareMap.get(DcMotor.class, "slide_r");
+       // Slide_L = hardwareMap.get(DcMotor.class, "slide_l");
 
-        pincher = hardwareMap.get(CRServo.class, "pincher");
+       // pincher = hardwareMap.get(CRServo.class, "pincher");
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -136,7 +144,7 @@ public class Robot extends java.lang.Thread {
 
 
     private void initDevices() {
-        mRuntime = new ElapsedTime();
+        ElapsedTime mRuntime = new ElapsedTime();
         mRuntime.reset();
 
         try {
