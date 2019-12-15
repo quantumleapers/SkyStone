@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="FirstOpMode255", group="Linear Opmode")
+@TeleOp(name="FirstOpMode257", group="Linear Opmode")
 public class FirstOpMode extends LinearOpMode{
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -185,7 +185,7 @@ public class FirstOpMode extends LinearOpMode{
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status3", "Run Time: " + runtime.toString());
-            telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
+            //telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
             telemetry.update();
         }
     }

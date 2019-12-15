@@ -45,8 +45,8 @@ public class Robot  extends java.lang.Thread {
         telemetry.update();
         Motor_FL.setPower(0.8);
         Motor_FR.setPower(-0.8);
-        Motor_BR.setPower(-0.8);
-        Motor_BL.setPower(0.8);
+        Motor_BR.setPower(0.8);
+        Motor_BL.setPower(-0.8);
         try {
             sleep(distance * movementFactor);
         } catch (Exception e) {
@@ -63,8 +63,8 @@ public class Robot  extends java.lang.Thread {
     public void moveF(long distance) {
         Motor_FL.setPower(-0.8); //FL
         Motor_FR.setPower(0.8); //FR
-        Motor_BR.setPower(0.8); //BR
-        Motor_BL.setPower(-0.8); //BL
+        Motor_BR.setPower(-0.8); //BR
+        Motor_BL.setPower(0.8); //BL
         try {
             sleep(distance * movementFactor);
         } catch (Exception e) {
