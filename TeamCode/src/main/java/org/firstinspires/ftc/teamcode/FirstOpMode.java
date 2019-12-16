@@ -140,8 +140,8 @@ public class FirstOpMode extends LinearOpMode{
                 telemetry.addData("Moving Complete", "Backward");
                 telemetry.update();
             }
-            /*
-            robot.moveF(4);
+
+            robot.moveF(1);
             try {
                 Thread.sleep(10000);
             } catch (Exception ex) {
@@ -150,7 +150,7 @@ public class FirstOpMode extends LinearOpMode{
 
                // break;
             }
-            robot.moveR(4);
+            robot.moveR(1);
             try {
                 Thread.sleep(10000);
             } catch (Exception ex) {
@@ -159,7 +159,7 @@ public class FirstOpMode extends LinearOpMode{
 
                 // break;
             }
-            robot.moveB(4);
+            robot.moveB(1);
             try {
                 Thread.sleep(10000);
             } catch (Exception ex) {
@@ -168,7 +168,7 @@ public class FirstOpMode extends LinearOpMode{
 
                 // break;
             }
-            robot.moveL(4);
+            robot.moveL(1);
             try {
                 Thread.sleep(10000);
             } catch (Exception ex) {
@@ -178,7 +178,7 @@ public class FirstOpMode extends LinearOpMode{
                 // break;
             }
 
-             */
+
            // robot.moveR(10);
            // robot.moveB(10);
             //robot.moveL(10);

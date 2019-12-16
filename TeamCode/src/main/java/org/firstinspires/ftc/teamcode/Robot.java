@@ -19,11 +19,11 @@ public class Robot  extends java.lang.Thread {
     public DcMotor Motor_BL;
     public HardwareMap hardwareMap;
     public Telemetry telemetry;
-    public int movementFactor = 20;
+    public int movementFactor = 10;
     public boolean isTeleOp = true;
     public DcMotor Slide_R;
     public DcMotor Slide_L;
-    public CRServo pincher;
+    public CRServo phook;
 
 
     Robot(HardwareMap map, Telemetry tel) {
@@ -43,10 +43,10 @@ public class Robot  extends java.lang.Thread {
     public void moveB(long distance) {
         telemetry.addData("Direction", "Forward");
         telemetry.update();
-        Motor_FL.setPower(0.8);
-        Motor_FR.setPower(-0.8);
-        Motor_BR.setPower(0.8);
-        Motor_BL.setPower(-0.8);
+        Motor_FL.setPower(0.6);
+        Motor_FR.setPower(-0.6);
+        Motor_BR.setPower(0.6);
+        Motor_BL.setPower(-0.6);
         try {
             sleep(distance * movementFactor);
         } catch (Exception e) {
@@ -61,10 +61,10 @@ public class Robot  extends java.lang.Thread {
     }
 
     public void moveF(long distance) {
-        Motor_FL.setPower(-0.8); //FL
-        Motor_FR.setPower(0.8); //FR
-        Motor_BR.setPower(-0.8); //BR
-        Motor_BL.setPower(0.8); //BL
+        Motor_FL.setPower(-0.6); //FL
+        Motor_FR.setPower(0.6); //FR
+        Motor_BR.setPower(-0.6); //BR
+        Motor_BL.setPower(0.6); //BL
         try {
             sleep(distance * movementFactor);
         } catch (Exception e) {
@@ -80,7 +80,7 @@ public class Robot  extends java.lang.Thread {
     }
 
     public void moveL(long distance) {
-        double power = 0.8;
+        double power = 1;
 
         Motor_FL.setPower(power );
         Motor_FR.setPower(power);
@@ -100,7 +100,7 @@ public class Robot  extends java.lang.Thread {
     }
 
     public void moveR(long distance) {
-        double power = 0.8;
+        double power = 1;
 
         Motor_FL.setPower((-1) * power);
         Motor_FR.setPower((-1) * power);
@@ -120,6 +120,34 @@ public class Robot  extends java.lang.Thread {
         if (isTeleOp == false) pause(250);
     }
 
+    public void moveHook90r(long distance) {
+        double power = -1;
+
+        phook.setPower(power);
+        try {
+            sleep(distance * movementFactor);
+        } catch (Exception e) {
+        }
+        phook.setPower(0);
+        telemetry.addData("Direction", "Up");
+        telemetry.update();
+        if (isTeleOp == false) pause(250);
+    }
+
+    public void moveHook90(long distance) {
+        double power = 1;
+
+        phook.setPower(power);
+        try {
+            sleep(distance * movementFactor);
+        } catch (Exception e) {
+        }
+        phook.setPower(0);
+        telemetry.addData("Direction", "Down");
+        telemetry.update();
+        if (isTeleOp == false) pause(250);
+    }
+
     private void initDeviceCore() throws Exception {
 
         telemetry.addData("Please wait", "In function init devices");
@@ -128,8 +156,9 @@ public class Robot  extends java.lang.Thread {
         //Wheels
         Motor_FL = hardwareMap.get(DcMotor.class, "Motor_FL");
         Motor_FR = hardwareMap.get(DcMotor.class, "Motor_FR");
-        Motor_BR = hardwareMap.get(DcMotor.class, "Motor_BR");
         Motor_BL = hardwareMap.get(DcMotor.class, "Motor_BL");
+        Motor_BR = hardwareMap.get(DcMotor.class, "Motor_BR");
+        phook = hardwareMap.get(CRServo.class, "phook");
 
      //   Slide_R = hardwareMap.get(DcMotor.class, "slide_r");
        // Slide_L = hardwareMap.get(DcMotor.class, "slide_l");
