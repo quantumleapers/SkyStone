@@ -19,11 +19,14 @@ public class Robot  extends java.lang.Thread {
     public DcMotor Motor_BL;
     public HardwareMap hardwareMap;
     public Telemetry telemetry;
-    public int movementFactor = 10;
     public boolean isTeleOp = true;
     public DcMotor Slide_R;
     public DcMotor Slide_L;
     public CRServo phook;
+    public int EncoderTicks = 1440;
+    public int WheelDiameter = 98;
+    public float Pi = (float) 3.14;
+    public float movementFactor = (WheelDiameter*Pi/EncoderTicks);
 
 
     Robot(HardwareMap map, Telemetry tel) {
@@ -48,7 +51,7 @@ public class Robot  extends java.lang.Thread {
         Motor_BR.setPower(0.6);
         Motor_BL.setPower(-0.6);
         try {
-            sleep(distance * movementFactor);
+            //sleep(distance * movementFactor);
         } catch (Exception e) {
         }
         Motor_FL.setPower(0);
@@ -61,12 +64,34 @@ public class Robot  extends java.lang.Thread {
     }
 
     public void moveF(long distance) {
+        int TargetTicks_FL = (int) (distance/movementFactor);
+        int TargetTicks_BL = (int) (distance/movementFactor);
+        int TargetTicks_FR = (int) (distance/movementFactor);
+        int TargetTicks_BR = (int) (distance/movementFactor);
         Motor_FL.setPower(-0.6); //FL
         Motor_FR.setPower(0.6); //FR
         Motor_BR.setPower(-0.6); //BR
         Motor_BL.setPower(0.6); //BL
         try {
-            sleep(distance * movementFactor);
+            //sleep(distance * movementFactor);
+            Motor_FL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            Motor_BL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            Motor_FR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            Motor_BR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            Motor_FL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Motor_BL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Motor_FR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Motor_BR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            Motor_FL.setTargetPosition(TargetTicks_FL);
+            Motor_BL.setTargetPosition(TargetTicks_BL);
+            Motor_BR.setTargetPosition(TargetTicks_BR);
+            Motor_FR.setTargetPosition(TargetTicks_FR);
+
+            while(Motor_BL.isBusy() || Motor_FL.isBusy() || Motor_BR.isBusy() || Motor_FR.isBusy() && isTeleOp == false){
+
+            }
         } catch (Exception e) {
         }
         Motor_FL.setPower(0);
@@ -87,7 +112,7 @@ public class Robot  extends java.lang.Thread {
         Motor_BR.setPower((-1) * power);
         Motor_BL.setPower((-1) * power);
         try {
-            sleep(distance * movementFactor);
+            //sleep(distance * movementFactor);
         } catch (Exception e) {
         }
         Motor_FL.setPower(0);
@@ -108,7 +133,7 @@ public class Robot  extends java.lang.Thread {
         Motor_BL.setPower(power);
 
         try {
-            sleep(distance * movementFactor);
+            //sleep(distance * movementFactor);
         } catch (Exception e) {
         }
         Motor_FL.setPower(0);
@@ -120,7 +145,7 @@ public class Robot  extends java.lang.Thread {
         if (isTeleOp == false) pause(250);
     }
 
-    public void moveHook90r(long distance) {
+    /*public void moveHook90r(long distance) {
         double power = -1;
 
         phook.setPower(power);
@@ -147,7 +172,7 @@ public class Robot  extends java.lang.Thread {
         telemetry.update();
         if (isTeleOp == false) pause(250);
     }
-
+*/
     private void initDeviceCore() throws Exception {
 
         telemetry.addData("Please wait", "In function init devices");
@@ -158,7 +183,7 @@ public class Robot  extends java.lang.Thread {
         Motor_FR = hardwareMap.get(DcMotor.class, "Motor_FR");
         Motor_BL = hardwareMap.get(DcMotor.class, "Motor_BL");
         Motor_BR = hardwareMap.get(DcMotor.class, "Motor_BR");
-        phook = hardwareMap.get(CRServo.class, "phook");
+        //phook = hardwareMap.get(CRServo.class, "phook");
 
      //   Slide_R = hardwareMap.get(DcMotor.class, "slide_r");
        // Slide_L = hardwareMap.get(DcMotor.class, "slide_l");

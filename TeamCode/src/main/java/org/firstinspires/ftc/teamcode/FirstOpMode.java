@@ -140,7 +140,7 @@ public class FirstOpMode extends LinearOpMode{
                 telemetry.addData("Moving Complete", "Backward");
                 telemetry.update();
             }
-
+/*
             robot.moveF(1);
             try {
                 Thread.sleep(10000);
@@ -177,7 +177,7 @@ public class FirstOpMode extends LinearOpMode{
 
                 // break;
             }
-
+*/
 
            // robot.moveR(10);
            // robot.moveB(10);
