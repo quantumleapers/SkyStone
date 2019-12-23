@@ -25,12 +25,12 @@ public class Robot  extends java.lang.Thread {
     public DcMotor Slide_R;
     public DcMotor Slide_L;
     public Servo phook;
-    //public int EncoderTicks = 1440;
-   // public int WheelDiameter = 3.86;
-   // public float Pi = (float) 3.14;
-    public double movementFactor1 = .0084169444;
-    //public float movementFactor = (WheelDiameter*Pi/EncoderTicks);
-      public  long movementFactor = 20;
+    public int EncoderTicks = 1440;
+    public float WheelDiameter = (float)3.86;
+   public float Pi = (float)3.14159265358979323;
+    //public double movementFactor1 = .0084169444;
+    public float movementFactor1 = (float)(WheelDiameter*Pi/EncoderTicks);
+    public  long movementFactor = 20;
 
     Robot(HardwareMap map, Telemetry tel) {
         hardwareMap = map;
@@ -47,7 +47,7 @@ public class Robot  extends java.lang.Thread {
 
 
     public void moveB(long distance) {
-        telemetry.addData("Direction", "Forward");
+        telemetry.addData("Direction", "Backword");
         telemetry.update();
         Motor_FL.setPower(0.6);
         Motor_FR.setPower(-0.6);
@@ -67,6 +67,25 @@ public class Robot  extends java.lang.Thread {
     }
 
     public void moveF(long distance) {
+        telemetry.addData("Direction", "Forward");
+        telemetry.update();
+        Motor_FL.setPower(-0.6);
+        Motor_FR.setPower(0.6);
+        Motor_BR.setPower(-0.6);
+        Motor_BL.setPower(0.6);
+        try {
+            sleep(distance * movementFactor);
+        } catch (Exception e) {
+        }
+        Motor_FL.setPower(0);
+        Motor_FR.setPower(0);
+        Motor_BR.setPower(0);
+        Motor_BL.setPower(0);
+        telemetry.addData("Direction", "Forward");
+        telemetry.update();
+        if (isTeleOp == false) pause(250);
+    }
+    public void moveFEnc(long distance) {
         int TargetTicks_FL = (int) (distance/movementFactor1);
         int TargetTicks_BL = (int) (distance/movementFactor1);
         int TargetTicks_FR = (int) (distance/movementFactor1);
@@ -151,9 +170,282 @@ public class Robot  extends java.lang.Thread {
         Motor_BR.setPower(0);
         Motor_BL.setPower(0);
 
-        telemetry.addData("Direction", "FORWARD");
+        telemetry.addData("Direction", "FORWARD enbcoded");
         telemetry.update();
        // if (isTeleOp == false) pause(250);
+
+    }
+
+    public void moveBEnc(long distance) {
+        int TargetTicks_FL = (int) (distance/movementFactor1);
+        int TargetTicks_BL = (int) (distance/movementFactor1);
+        int TargetTicks_FR = (int) (distance/movementFactor1);
+        int TargetTicks_BR = (int) (distance/movementFactor1);
+
+        telemetry.addData("FL target position", TargetTicks_FL);
+        telemetry.addData("BL target position", TargetTicks_BL);
+        telemetry.addData("FR target position", TargetTicks_FR);
+        telemetry.addData("BR target position", TargetTicks_BR);
+
+        // Motor_FL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        // Motor_BL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        // Motor_FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        // Motor_BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+
+
+        try {
+            // sleep(distance * movementFactor);
+            Motor_FL.setDirection(DcMotor.Direction.FORWARD);
+            Motor_BL.setDirection(DcMotor.Direction.REVERSE);
+            Motor_FR.setDirection(DcMotor.Direction.FORWARD);
+            Motor_BR.setDirection(DcMotor.Direction.REVERSE);
+
+            Motor_FL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            Motor_BL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            Motor_FR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            Motor_BR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            Motor_FL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            Motor_BL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            Motor_FR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            Motor_BR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+
+
+
+            Motor_FL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Motor_BL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Motor_FR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Motor_BR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            Motor_FL.setTargetPosition(TargetTicks_FL);
+            Motor_BL.setTargetPosition(TargetTicks_BL);
+            Motor_BR.setTargetPosition(TargetTicks_BR);
+            Motor_FR.setTargetPosition(TargetTicks_FR);
+
+
+            Motor_FL.setPower(1); //FL
+            Motor_FR.setPower(1); //FR
+            Motor_BR.setPower(1); //BR
+            Motor_BL.setPower(1); //BL
+
+            telemetry.addData("FL target position after run", Motor_FL.getCurrentPosition());
+            telemetry.addData("BL target position after run", Motor_BL.getCurrentPosition());
+            telemetry.addData("FR target position after run", Motor_FR.getCurrentPosition());
+            telemetry.addData("BR target position after run", Motor_BR.getCurrentPosition());
+
+            while(Motor_BL.isBusy() || Motor_FL.isBusy() || Motor_BR.isBusy() || Motor_FR.isBusy()){
+                telemetry.addData("encoder-fwd", Motor_FL.getCurrentPosition() + "  busy=" + Motor_FL.isBusy());
+                telemetry.update();
+
+            }
+        } catch (Exception e) {
+        }
+
+        // try {
+        //     sleep(10000);
+        // } catch (Exception e) {
+        // }
+        //Motor_FL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        // Motor_BL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        // Motor_FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        // Motor_BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        telemetry.addData("FL target position after run completion", Motor_FL.getCurrentPosition());
+        telemetry.addData("BL target position after run completion", Motor_BL.getCurrentPosition());
+        telemetry.addData("FR target position after run completion", Motor_FR.getCurrentPosition());
+        telemetry.addData("BR target position after run completion", Motor_BR.getCurrentPosition());
+
+        Motor_FL.setPower(0);
+        Motor_FR.setPower(0);
+        Motor_BR.setPower(0);
+        Motor_BL.setPower(0);
+
+        telemetry.addData("Direction", "Backword encoded");
+        telemetry.update();
+        // if (isTeleOp == false) pause(250);
+
+    }
+
+    public void moveLEnc(long distance) {
+        int TargetTicks_FL = (int) (distance/movementFactor1);
+        int TargetTicks_BL = (int) (distance/movementFactor1);
+        int TargetTicks_FR = (int) (distance/movementFactor1);
+        int TargetTicks_BR = (int) (distance/movementFactor1);
+
+        telemetry.addData("FL target position", TargetTicks_FL);
+        telemetry.addData("BL target position", TargetTicks_BL);
+        telemetry.addData("FR target position", TargetTicks_FR);
+        telemetry.addData("BR target position", TargetTicks_BR);
+
+        // Motor_FL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        // Motor_BL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        // Motor_FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        // Motor_BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+
+
+        try {
+            // sleep(distance * movementFactor);
+            Motor_FL.setDirection(DcMotor.Direction.REVERSE);
+            Motor_BL.setDirection(DcMotor.Direction.FORWARD);
+            Motor_FR.setDirection(DcMotor.Direction.FORWARD);
+            Motor_BR.setDirection(DcMotor.Direction.REVERSE);
+
+            Motor_FL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            Motor_BL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            Motor_FR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            Motor_BR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            Motor_FL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            Motor_BL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            Motor_FR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            Motor_BR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+
+
+
+            Motor_FL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Motor_BL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Motor_FR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Motor_BR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            Motor_FL.setTargetPosition(TargetTicks_FL);
+            Motor_BL.setTargetPosition(TargetTicks_BL);
+            Motor_BR.setTargetPosition(TargetTicks_BR);
+            Motor_FR.setTargetPosition(TargetTicks_FR);
+
+
+            Motor_FL.setPower(1); //FL
+            Motor_FR.setPower(1); //FR
+            Motor_BR.setPower(1); //BR
+            Motor_BL.setPower(1); //BL
+
+            telemetry.addData("FL target position after run", Motor_FL.getCurrentPosition());
+            telemetry.addData("BL target position after run", Motor_BL.getCurrentPosition());
+            telemetry.addData("FR target position after run", Motor_FR.getCurrentPosition());
+            telemetry.addData("BR target position after run", Motor_BR.getCurrentPosition());
+
+            while(Motor_BL.isBusy() || Motor_FL.isBusy() || Motor_BR.isBusy() || Motor_FR.isBusy()){
+                telemetry.addData("encoder-fwd", Motor_FL.getCurrentPosition() + "  busy=" + Motor_FL.isBusy());
+                telemetry.update();
+
+            }
+        } catch (Exception e) {
+        }
+
+        // try {
+        //     sleep(10000);
+        // } catch (Exception e) {
+        // }
+        //Motor_FL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        // Motor_BL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        // Motor_FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        // Motor_BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        telemetry.addData("FL target position after run completion", Motor_FL.getCurrentPosition());
+        telemetry.addData("BL target position after run completion", Motor_BL.getCurrentPosition());
+        telemetry.addData("FR target position after run completion", Motor_FR.getCurrentPosition());
+        telemetry.addData("BR target position after run completion", Motor_BR.getCurrentPosition());
+
+        Motor_FL.setPower(0);
+        Motor_FR.setPower(0);
+        Motor_BR.setPower(0);
+        Motor_BL.setPower(0);
+
+        telemetry.addData("Direction", "LEFT Encoded ");
+        telemetry.update();
+        // if (isTeleOp == false) pause(250);
+
+    }
+
+    public void moveREnc(long distance) {
+        int TargetTicks_FL = (int) (distance/movementFactor1);
+        int TargetTicks_BL = (int) (distance/movementFactor1);
+        int TargetTicks_FR = (int) (distance/movementFactor1);
+        int TargetTicks_BR = (int) (distance/movementFactor1);
+
+        telemetry.addData("FL target position", TargetTicks_FL);
+        telemetry.addData("BL target position", TargetTicks_BL);
+        telemetry.addData("FR target position", TargetTicks_FR);
+        telemetry.addData("BR target position", TargetTicks_BR);
+
+        // Motor_FL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        // Motor_BL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        // Motor_FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        // Motor_BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+
+
+        try {
+            // sleep(distance * movementFactor);
+            Motor_FL.setDirection(DcMotor.Direction.REVERSE);
+            Motor_BL.setDirection(DcMotor.Direction.FORWARD);
+            Motor_FR.setDirection(DcMotor.Direction.REVERSE);
+            Motor_BR.setDirection(DcMotor.Direction.FORWARD);
+
+            Motor_FL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            Motor_BL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            Motor_FR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            Motor_BR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            Motor_FL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            Motor_BL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            Motor_FR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            Motor_BR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+
+
+
+            Motor_FL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Motor_BL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Motor_FR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Motor_BR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            Motor_FL.setTargetPosition(TargetTicks_FL);
+            Motor_BL.setTargetPosition(TargetTicks_BL);
+            Motor_BR.setTargetPosition(TargetTicks_BR);
+            Motor_FR.setTargetPosition(TargetTicks_FR);
+
+
+            Motor_FL.setPower(1); //FL
+            Motor_FR.setPower(1); //FR
+            Motor_BR.setPower(1); //BR
+            Motor_BL.setPower(1); //BL
+
+            telemetry.addData("FL target position after run", Motor_FL.getCurrentPosition());
+            telemetry.addData("BL target position after run", Motor_BL.getCurrentPosition());
+            telemetry.addData("FR target position after run", Motor_FR.getCurrentPosition());
+            telemetry.addData("BR target position after run", Motor_BR.getCurrentPosition());
+
+            while(Motor_BL.isBusy() || Motor_FL.isBusy() || Motor_BR.isBusy() || Motor_FR.isBusy()){
+                telemetry.addData("encoder-fwd", Motor_FL.getCurrentPosition() + "  busy=" + Motor_FL.isBusy());
+                telemetry.update();
+
+            }
+        } catch (Exception e) {
+        }
+
+        // try {
+        //     sleep(10000);
+        // } catch (Exception e) {
+        // }
+        //Motor_FL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        // Motor_BL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        // Motor_FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        // Motor_BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        telemetry.addData("FL target position after run completion", Motor_FL.getCurrentPosition());
+        telemetry.addData("BL target position after run completion", Motor_BL.getCurrentPosition());
+        telemetry.addData("FR target position after run completion", Motor_FR.getCurrentPosition());
+        telemetry.addData("BR target position after run completion", Motor_BR.getCurrentPosition());
+
+        Motor_FL.setPower(0);
+        Motor_FR.setPower(0);
+        Motor_BR.setPower(0);
+        Motor_BL.setPower(0);
+
+        telemetry.addData("Direction", "RIGHT Encoded");
+        telemetry.update();
+        // if (isTeleOp == false) pause(250);
 
     }
 
@@ -206,6 +498,18 @@ public class Robot  extends java.lang.Thread {
 
 
         telemetry.addData("servo moder ", "90 degree test");
+        telemetry.update();
+
+    }
+
+    public void moveHook90l() {
+        //double power = -1;
+
+        // phook.setPosition(0);
+        phook.setPosition(-1);
+
+
+        telemetry.addData("servo moder ", "90 degree reverse");
         telemetry.update();
 
     }
