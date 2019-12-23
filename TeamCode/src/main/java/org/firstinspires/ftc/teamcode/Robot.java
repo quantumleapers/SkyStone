@@ -77,17 +77,19 @@ public class Robot  extends java.lang.Thread {
         telemetry.addData("FR target position", TargetTicks_FR);
         telemetry.addData("BR target position", TargetTicks_BR);
 
-        Motor_FL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        Motor_BL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        Motor_FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        Motor_BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+       // Motor_FL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+       // Motor_BL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+       // Motor_FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+       // Motor_BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
-        Motor_FL.setPower(1); //FL
-        Motor_FR.setPower(1); //FR
-        Motor_BR.setPower(1); //BR
-        Motor_BL.setPower(1); //BL
+
         try {
            // sleep(distance * movementFactor);
+            Motor_FL.setDirection(DcMotor.Direction.REVERSE);
+            Motor_BL.setDirection(DcMotor.Direction.FORWARD);
+            Motor_FR.setDirection(DcMotor.Direction.FORWARD);
+            Motor_BR.setDirection(DcMotor.Direction.REVERSE);
+
             Motor_FL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             Motor_BL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             Motor_FR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -98,38 +100,51 @@ public class Robot  extends java.lang.Thread {
             Motor_FR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             Motor_BR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-            Motor_FL.setDirection(DcMotor.Direction.REVERSE);
-            Motor_BL.setDirection(DcMotor.Direction.FORWARD);
-            Motor_FR.setDirection(DcMotor.Direction.FORWARD);
-            Motor_BR.setDirection(DcMotor.Direction.REVERSE);
 
-            telemetry.addData("FL target position", Motor_FL.getCurrentPosition());
-            telemetry.addData("BL target position", Motor_BL.getCurrentPosition());
-            telemetry.addData("FR target position", Motor_FR.getCurrentPosition());
-            telemetry.addData("BR target position", Motor_BR.getCurrentPosition());
+
+
+            Motor_FL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Motor_BL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Motor_FR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Motor_BR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             Motor_FL.setTargetPosition(TargetTicks_FL);
             Motor_BL.setTargetPosition(TargetTicks_BL);
             Motor_BR.setTargetPosition(TargetTicks_BR);
             Motor_FR.setTargetPosition(TargetTicks_FR);
-            Motor_FL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            Motor_BL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            Motor_FR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            Motor_BR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+            Motor_FL.setPower(1); //FL
+            Motor_FR.setPower(1); //FR
+            Motor_BR.setPower(1); //BR
+            Motor_BL.setPower(1); //BL
+
             telemetry.addData("FL target position after run", Motor_FL.getCurrentPosition());
             telemetry.addData("BL target position after run", Motor_BL.getCurrentPosition());
             telemetry.addData("FR target position after run", Motor_FR.getCurrentPosition());
             telemetry.addData("BR target position after run", Motor_BR.getCurrentPosition());
 
-            //while(Motor_BL.isBusy() || Motor_FL.isBusy() || Motor_BR.isBusy() || Motor_FR.isBusy() && isTeleOp == false){
+           while(Motor_BL.isBusy() || Motor_FL.isBusy() || Motor_BR.isBusy() || Motor_FR.isBusy()){
+                telemetry.addData("encoder-fwd", Motor_FL.getCurrentPosition() + "  busy=" + Motor_FL.isBusy());
+                telemetry.update();
 
-            //}
+            }
         } catch (Exception e) {
         }
-        Motor_FL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Motor_BL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Motor_FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Motor_BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+       // try {
+       //     sleep(10000);
+       // } catch (Exception e) {
+       // }
+        //Motor_FL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+       // Motor_BL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+       // Motor_FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+       // Motor_BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        telemetry.addData("FL target position after run completion", Motor_FL.getCurrentPosition());
+        telemetry.addData("BL target position after run completion", Motor_BL.getCurrentPosition());
+        telemetry.addData("FR target position after run completion", Motor_FR.getCurrentPosition());
+        telemetry.addData("BR target position after run completion", Motor_BR.getCurrentPosition());
 
         Motor_FL.setPower(0);
         Motor_FR.setPower(0);
@@ -138,7 +153,7 @@ public class Robot  extends java.lang.Thread {
 
         telemetry.addData("Direction", "FORWARD");
         telemetry.update();
-        if (isTeleOp == false) pause(250);
+       // if (isTeleOp == false) pause(250);
 
     }
 
@@ -221,16 +236,20 @@ public class Robot  extends java.lang.Thread {
         Motor_BR = hardwareMap.get(DcMotor.class, "Motor_BR");
         phook = hardwareMap.get(Servo.class, "phook");
         phook.setPosition(0);
-        Motor_FL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Motor_BL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Motor_FR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Motor_BR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        
+       // Motor_FL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //Motor_BL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+       // Motor_FR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+       // Motor_BR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
      //   Slide_R = hardwareMap.get(DcMotor.class, "slide_r");
        // Slide_L = hardwareMap.get(DcMotor.class, "slide_l");
 
        // pincher = hardwareMap.get(CRServo.class, "pincher");
 
+        Motor_FL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Motor_BL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Motor_FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Motor_BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
