@@ -11,7 +11,7 @@ public class ServoMotor extends LinearOpMode {
    // DCMotor motorTest;
     @Override
     public void runOpMode() {
-
+/*/
         double tgtPower = 0;
         while (opModeIsActive()) {
             tgtPower = -this.gamepad1.left_stick_y;
@@ -34,5 +34,7 @@ public class ServoMotor extends LinearOpMode {
             telemetry.update();
 
         }
+
+ */
     }
 }
