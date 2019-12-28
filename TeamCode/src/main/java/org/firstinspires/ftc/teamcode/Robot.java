@@ -197,8 +197,8 @@ public class Robot  extends java.lang.Thread {
             // sleep(distance * movementFactor);
             Motor_FL.setDirection(DcMotor.Direction.FORWARD);
             Motor_BL.setDirection(DcMotor.Direction.REVERSE);
-            Motor_FR.setDirection(DcMotor.Direction.FORWARD);
-            Motor_BR.setDirection(DcMotor.Direction.REVERSE);
+            Motor_FR.setDirection(DcMotor.Direction.REVERSE);
+            Motor_BR.setDirection(DcMotor.Direction.FORWARD);
 
             Motor_FL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             Motor_BL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -286,8 +286,8 @@ public class Robot  extends java.lang.Thread {
 
         try {
             // sleep(distance * movementFactor);
-            Motor_FL.setDirection(DcMotor.Direction.REVERSE);
-            Motor_BL.setDirection(DcMotor.Direction.FORWARD);
+            Motor_FL.setDirection(DcMotor.Direction.FORWARD);
+            Motor_BL.setDirection(DcMotor.Direction.REVERSE);
             Motor_FR.setDirection(DcMotor.Direction.FORWARD);
             Motor_BR.setDirection(DcMotor.Direction.REVERSE);
 
@@ -494,7 +494,7 @@ public class Robot  extends java.lang.Thread {
         //double power = -1;
 
        // phook.setPosition(0);
-        phook.setPosition(1);
+        phook.setPosition(0.5);
 
 
         telemetry.addData("servo moder ", "90 degree test");
@@ -506,7 +506,7 @@ public class Robot  extends java.lang.Thread {
         //double power = -1;
 
         // phook.setPosition(0);
-        phook.setPosition(-1);
+        phook.setPosition(-0.5);
 
 
         telemetry.addData("servo moder ", "90 degree reverse");

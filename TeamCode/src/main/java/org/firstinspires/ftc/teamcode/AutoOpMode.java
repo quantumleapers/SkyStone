@@ -19,7 +19,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 
-@Autonomous(name="AutoOp", group="Linear Opmode")
+@Autonomous(name="AutoOpBlue", group="Linear Opmode")
 public class AutoOpMode extends LinearOpMode {
 
     private ElapsedTime aRuntime = new ElapsedTime();
