@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 @TeleOp(name = "Concept: Scan Servo", group = "Concept")
 public class ServoMotor extends LinearOpMode {
 
-    Servo   servo;
+    Servo   servoTest;
    // DCMotor motorTest;
     @Override
     public void runOpMode() {
@@ -29,7 +29,7 @@ public class ServoMotor extends LinearOpMode {
             }
             telemetry.addData("Servo Position", servoTest.getPosition());
             telemetry.addData("Target Power", tgtPower);
-            telemetry.addData("Motor Power", motorTest.getPower());
+            //telemetry.addData("Motor Power", motorTest.getPower());
             telemetry.addData("Status", "Running");
             telemetry.update();
 
