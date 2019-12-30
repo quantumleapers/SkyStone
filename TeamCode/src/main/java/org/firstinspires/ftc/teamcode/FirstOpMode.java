@@ -80,15 +80,26 @@ public class FirstOpMode extends LinearOpMode{
             if (this.gamepad1.right_stick_y > 0.5) {
                 telemetry.addData("Game pad 1Moving", "Backward");
                 telemetry.update();
+               // robot.moveRevMotor(1);
                 robot.moveB(1);
                 telemetry.addData("Moving Complete", "Backward");
                 telemetry.update();
             }
+
+            if (this.gamepad1.left_trigger > 0.5) {
+                telemetry.addData("Game pad 1Moving", "Backward");
+                telemetry.update();
+                robot.moveRevMotor(1);
+                //robot.moveB(1);
+                telemetry.addData("Moving Complete", "Backward");
+                telemetry.update();
+            }
+
            // gamepad2 = new Gamepad();
             if (this.gamepad2.right_stick_y > 0.5) {
                 telemetry.addData("Moving", "Backward");
                 telemetry.update();
-                robot.moveBEnc(1);
+                robot.moveForward(1);
                 telemetry.addData("Moving Complete", "Backward");
                 telemetry.update();
             }
@@ -104,7 +115,7 @@ public class FirstOpMode extends LinearOpMode{
             if (this.gamepad2.right_stick_y < -0.5) {
                 telemetry.addData("Moving", "Forward");
                 telemetry.update();
-                robot.moveFEnc(1);
+                robot.moveBackward(1);
                 telemetry.addData("Moving Complete", "Backward");
                 telemetry.update();
             }
@@ -120,7 +131,7 @@ public class FirstOpMode extends LinearOpMode{
             if (this.gamepad2.right_stick_x > 0.5) {
                 telemetry.addData("Moving", "Right");
                 telemetry.update();
-                robot.moveREnc(1);
+                robot.moveLeft(1);
                 telemetry.addData("Moving Complete", "Backward");
                 telemetry.update();
             }
@@ -136,7 +147,7 @@ public class FirstOpMode extends LinearOpMode{
             if (this.gamepad2.right_stick_x < -0.5) {
                 telemetry.addData("Moving", "Left");
                 telemetry.update();
-                robot.moveLEnc(1);
+                robot.moveRight(1);
                 telemetry.addData("Moving Complete", "Backward");
                 telemetry.update();
             }

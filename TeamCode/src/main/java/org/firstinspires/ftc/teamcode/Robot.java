@@ -19,12 +19,15 @@ public class Robot  extends java.lang.Thread {
     public DcMotor Motor_FR;
     public DcMotor Motor_BR;
     public DcMotor Motor_BL;
+    public DcMotor Motor_REX;
     public HardwareMap hardwareMap;
     public Telemetry telemetry;
     public boolean isTeleOp = true;
     public DcMotor Slide_R;
     public DcMotor Slide_L;
-    public Servo phook;
+    public Servo phookLeft;
+    public Servo flap;
+    public Servo phookRight;
     public int EncoderTicks = 1440;
     public float WheelDiameter = (float)3.86;
    public float Pi = (float)3.14159265358979323;
@@ -43,6 +46,21 @@ public class Robot  extends java.lang.Thread {
             sleep(milliSec);
         } catch (Exception e) {
         }
+    }
+
+    public void moveRevMotor(long distance) {
+        telemetry.addData("Direction", "Backword");
+        telemetry.update();
+        Motor_REX.setPower(0.4);
+
+        try {
+            sleep(distance * movementFactor);
+        } catch (Exception e) {
+        }
+
+        telemetry.addData("Direction", "Rev motor right trigger");
+        telemetry.update();
+        if (isTeleOp == false) pause(250);
     }
 
 
@@ -85,7 +103,7 @@ public class Robot  extends java.lang.Thread {
         telemetry.update();
         if (isTeleOp == false) pause(250);
     }
-    public void moveFEnc(long distance) {
+    public void moveBackward(long distance) {
         int TargetTicks_FL = (int) (distance/movementFactor1);
         int TargetTicks_BL = (int) (distance/movementFactor1);
         int TargetTicks_FR = (int) (distance/movementFactor1);
@@ -142,12 +160,17 @@ public class Robot  extends java.lang.Thread {
             telemetry.addData("BL target position after run", Motor_BL.getCurrentPosition());
             telemetry.addData("FR target position after run", Motor_FR.getCurrentPosition());
             telemetry.addData("BR target position after run", Motor_BR.getCurrentPosition());
+            try {
+                Thread.sleep(1500);
+            } catch (Exception ex) {
 
-           while(Motor_BL.isBusy() || Motor_FL.isBusy() || Motor_BR.isBusy() || Motor_FR.isBusy()){
+            }
+
+          // while(Motor_BL.isBusy() || Motor_FL.isBusy() || Motor_BR.isBusy() || Motor_FR.isBusy()){
                 telemetry.addData("encoder-fwd", Motor_FL.getCurrentPosition() + "  busy=" + Motor_FL.isBusy());
                 telemetry.update();
 
-            }
+            //}
         } catch (Exception e) {
         }
 
@@ -170,13 +193,13 @@ public class Robot  extends java.lang.Thread {
         Motor_BR.setPower(0);
         Motor_BL.setPower(0);
 
-        telemetry.addData("Direction", "FORWARD enbcoded");
+        telemetry.addData("Direction", "FORWARD encoded");
         telemetry.update();
        // if (isTeleOp == false) pause(250);
 
     }
 
-    public void moveBEnc(long distance) {
+    public void moveForward(long distance) {
         int TargetTicks_FL = (int) (distance/movementFactor1);
         int TargetTicks_BL = (int) (distance/movementFactor1);
         int TargetTicks_FR = (int) (distance/movementFactor1);
@@ -225,15 +248,22 @@ public class Robot  extends java.lang.Thread {
 
 
             Motor_FL.setPower(1); //FL
-            Motor_FR.setPower(1); //FR
-            Motor_BR.setPower(1); //BR
-            Motor_BL.setPower(1); //BL
+            Motor_FR.setPower(0.7); //FR
+            Motor_BR.setPower(1.0); //BR
+            Motor_BL.setPower(0.7); //BL
 
             telemetry.addData("FL target position after run", Motor_FL.getCurrentPosition());
             telemetry.addData("BL target position after run", Motor_BL.getCurrentPosition());
             telemetry.addData("FR target position after run", Motor_FR.getCurrentPosition());
             telemetry.addData("BR target position after run", Motor_BR.getCurrentPosition());
+/*
+            try {
+                Thread.sleep(1500);
+            } catch (Exception ex) {
 
+            }
+
+ */
             while(Motor_BL.isBusy() || Motor_FL.isBusy() || Motor_BR.isBusy() || Motor_FR.isBusy()){
                 telemetry.addData("encoder-fwd", Motor_FL.getCurrentPosition() + "  busy=" + Motor_FL.isBusy());
                 telemetry.update();
@@ -267,7 +297,7 @@ public class Robot  extends java.lang.Thread {
 
     }
 
-    public void moveLEnc(long distance) {
+    public void moveRight(long distance) {
         int TargetTicks_FL = (int) (distance/movementFactor1);
         int TargetTicks_BL = (int) (distance/movementFactor1);
         int TargetTicks_FR = (int) (distance/movementFactor1);
@@ -324,12 +354,17 @@ public class Robot  extends java.lang.Thread {
             telemetry.addData("BL target position after run", Motor_BL.getCurrentPosition());
             telemetry.addData("FR target position after run", Motor_FR.getCurrentPosition());
             telemetry.addData("BR target position after run", Motor_BR.getCurrentPosition());
+            try {
+                Thread.sleep(1500);
+            } catch (Exception ex) {
 
-            while(Motor_BL.isBusy() || Motor_FL.isBusy() || Motor_BR.isBusy() || Motor_FR.isBusy()){
+            }
+
+           // while(Motor_BL.isBusy() || Motor_FL.isBusy() || Motor_BR.isBusy() || Motor_FR.isBusy()){
                 telemetry.addData("encoder-fwd", Motor_FL.getCurrentPosition() + "  busy=" + Motor_FL.isBusy());
                 telemetry.update();
 
-            }
+           // }
         } catch (Exception e) {
         }
 
@@ -358,7 +393,7 @@ public class Robot  extends java.lang.Thread {
 
     }
 
-    public void moveREnc(long distance) {
+    public void moveLeft(long distance) {
         int TargetTicks_FL = (int) (distance/movementFactor1);
         int TargetTicks_BL = (int) (distance/movementFactor1);
         int TargetTicks_FR = (int) (distance/movementFactor1);
@@ -490,28 +525,97 @@ public class Robot  extends java.lang.Thread {
         if (isTeleOp == false) pause(250);
     }
 
-    public void moveHook90r() {
+    public void moveRightHookToLatch() {
+
+        phookRight.setPosition(0.97);
+        telemetry.addData("left hook position ", phookRight.getPosition());
+        telemetry.update();
+    }
+
+
+
+    public void moveRightHookToRelease() {
+        while (phookRight.getPosition() != 0.50) {
+            phookRight.setPosition(0.50);
+            telemetry.addData("servo moder ", "resetting");
+            telemetry.update();
+            try {
+                Thread.sleep(1500);
+            } catch (Exception ex) {
+
+            }
+        }
+    }
+
+    public void moveRightHook90r() {
         //double power = -1;
 
-       // phook.setPosition(0);
-        phook.setPosition(0.5);
+        // phook.setPosition(0);
+        phookRight.setPosition(0.97);
+        telemetry.addData("left hook position ", phookRight.getPosition());
+        telemetry.update();
 
+        try {
+            Thread.sleep(2500);
+        } catch (Exception ex) {
+
+        }
 
         telemetry.addData("servo moder ", "90 degree test");
         telemetry.update();
 
     }
 
-    public void moveHook90l() {
+    public void moveFlap() {
         //double power = -1;
 
         // phook.setPosition(0);
-        phook.setPosition(-0.5);
-
-
-        telemetry.addData("servo moder ", "90 degree reverse");
+        flap.setPosition(0.97);
+        telemetry.addData("position ", flap.getPosition());
         telemetry.update();
 
+        try {
+            Thread.sleep(500);
+        } catch (Exception ex) {
+
+        }
+
+
+
+
+
+
+
+        telemetry.addData("servo moder ", "flap test");
+        telemetry.update();
+
+    }
+
+    public void moveLeftHookToLatch() {
+        //double power = -1;
+        phookLeft.setPosition(0.97);
+        telemetry.addData("left hook position ", phookLeft.getPosition());
+        telemetry.update();
+
+        // sleep for 2 seconds
+        try {
+            Thread.sleep(2000);
+        } catch (Exception ex) {
+
+        }
+    }
+
+    public void moveLeftHookToRelease() {
+        while (phookLeft.getPosition() != 0.50) {
+            phookLeft.setPosition(0.50);
+            telemetry.addData("servo moder ", "resetting");
+            telemetry.update();
+            try {
+                Thread.sleep(1500);
+            } catch (Exception ex) {
+
+            }
+        }
     }
 /*
     public void moveHook90(long distance) {
@@ -538,8 +642,26 @@ public class Robot  extends java.lang.Thread {
         Motor_FR = hardwareMap.get(DcMotor.class, "Motor_FR");
         Motor_BL = hardwareMap.get(DcMotor.class, "Motor_BL");
         Motor_BR = hardwareMap.get(DcMotor.class, "Motor_BR");
-        phook = hardwareMap.get(Servo.class, "phook");
-        phook.setPosition(0);
+        phookLeft = hardwareMap.get(Servo.class, "left_hook");
+        phookLeft.resetDeviceConfigurationForOpMode();
+        phookLeft.setDirection(Servo.Direction.FORWARD);
+        //phook.s
+        phookLeft.setPosition(0.45);
+
+        phookRight = hardwareMap.get(Servo.class, "right_hook");
+        phookRight.resetDeviceConfigurationForOpMode();
+        phookRight.setDirection(Servo.Direction.FORWARD);
+        //phook.s
+        phookRight.setPosition(0.45);
+        /*
+        flap = hardwareMap.get(Servo.class, "flap");
+        flap.resetDeviceConfigurationForOpMode();
+        flap.setDirection(Servo.Direction.FORWARD);
+        //phook.s
+        flap.setPosition(0.45);
+
+         */
+     //   Motor_REX = hardwareMap.get(DcMotor.class, "flap");
        // Motor_FL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //Motor_BL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
        // Motor_FR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -571,7 +693,7 @@ public class Robot  extends java.lang.Thread {
             telemetry.addData("Exception", "In function init devices" + e);
             telemetry.update();
             try {
-                sleep(10000);
+                sleep(100);
             } catch (Exception e1) {
             }
 

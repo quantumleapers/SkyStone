@@ -34,19 +34,33 @@ public class AutoOpMode extends LinearOpMode {
         waitForStart();
         aRuntime.reset();
         Robot robot = new Robot(hardwareMap, telemetry);
-        robot.moveLEnc(30);
+        //  robot.moveFEnc(30);
+        //robot.moveLEnc(30);
 
-        robot.moveFEnc(30);
-        robot.moveHook90r();
-        robot.moveBEnc(30);
-        robot.moveHook90l();
-        robot.moveREnc(30);
+
+        robot.moveRightHookToLatch();
+        robot.moveLeftHookToLatch();
+        robot.moveBackward(30);
+        robot.moveRightHookToRelease();
+        robot.moveLeftHookToRelease();
+       // robot.moveFlap();
+/*
+        try p
+            Thread.sleep(2000);
+
+        } catch (Exception ex) {
+            telemetry.addData("sleep", "sleep");
+            telemetry.update();
+        }*/
+       // robot.moveFEnc(60);
+        //robot.moveHook90l();
+       // robot.moveREnc(30);
 
 
            // telemetry.addData("SLEEP", "Autonomous Run Time: " + aRuntime.toString());
            // telemetry.update();
 
-   //     robot.moveHook90r();
+
         //robot.moveF(10);
 
    }
