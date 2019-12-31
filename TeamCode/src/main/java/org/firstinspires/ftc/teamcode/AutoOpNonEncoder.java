@@ -19,24 +19,25 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 
-@Autonomous(name="AutoOpBlue", group="Linear Opmode")
-public class AutoOpMode extends LinearOpMode {
+@Autonomous(name="AutoOpBlueNonEncoder", group="Linear Opmode")
+public class AutoOpNonEncoder extends LinearOpMode {
 
     private ElapsedTime aRuntime = new ElapsedTime();
 
     @Override
     public void runOpMode() throws InterruptedException {
-            telemetry.addData("Starting Autonomous", "Initialized");
-            telemetry.update();
-            telemetry.addData("HardwareMap", hardwareMap.size());
-            telemetry.update();
+        telemetry.addData("Starting Autonomous", "Initialized");
+        telemetry.update();
+        telemetry.addData("HardwareMap", hardwareMap.size());
+        telemetry.update();
 
         waitForStart();
         aRuntime.reset();
         Robot robot = new Robot(hardwareMap, telemetry);
-        robot.moveBackward(12);
-        robot.moveRight(34);
-        robot.moveBackward(17);
+        robot.moveB(27);
+        robot.moveR(108);
+
+        robot.moveB(48);
 
         robot.engageHooks(72);
         robot.moveFlap();
@@ -45,7 +46,7 @@ public class AutoOpMode extends LinearOpMode {
         } catch (Exception ex) {
 
         }
-        robot.moveForward(29);
+        robot.moveF(83);
         try {
             Thread.sleep(500);
         } catch (Exception ex) {
@@ -60,11 +61,11 @@ public class AutoOpMode extends LinearOpMode {
 
         }
 
-        robot.moveLeft(34);
-        robot.moveBackward(17);
-        robot.moveRight(8);
-        robot.moveForward(13);
-        robot.moveLeft(24);
+        robot.moveL(108);
+        robot.moveB(11);
+        robot.moveL(50);
+
+
 /*
         robot.engageSlider(2500);
         try {
@@ -89,7 +90,7 @@ public class AutoOpMode extends LinearOpMode {
         robot.moveLeftHookToRelease();
 
  */
-       // robot.moveFlap();
+        // robot.moveFlap();
 /*
         try p
             Thread.sleep(2000);
@@ -98,16 +99,16 @@ public class AutoOpMode extends LinearOpMode {
             telemetry.addData("sleep", "sleep");
             telemetry.update();
         }*/
-       // robot.moveFEnc(60);
+        // robot.moveFEnc(60);
         //robot.moveHook90l();
-       // robot.moveREnc(30);
+        // robot.moveREnc(30);
 
 
-           // telemetry.addData("SLEEP", "Autonomous Run Time: " + aRuntime.toString());
-           // telemetry.update();
+        // telemetry.addData("SLEEP", "Autonomous Run Time: " + aRuntime.toString());
+        // telemetry.update();
 
 
         //robot.moveF(10);
 
-   }
+    }
 }
