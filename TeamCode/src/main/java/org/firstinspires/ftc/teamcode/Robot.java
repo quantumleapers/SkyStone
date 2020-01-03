@@ -5,6 +5,7 @@ import android.util.Log;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Gyroscope;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -38,6 +39,7 @@ public class Robot  extends java.lang.Thread {
     //public double movementFactor1 = .0084169444;
     public float movementFactor1 = (float)(WheelDiameter*Pi/EncoderTicks);
     public  long movementFactor = 20;
+    DigitalChannel digitalTouch;
 
     Robot(HardwareMap map, Telemetry tel) {
         hardwareMap = map;
@@ -107,6 +109,25 @@ public class Robot  extends java.lang.Thread {
         telemetry.update();
         if (isTeleOp == true) pause(250);
     }
+
+    public void moveForwardUntilTouch() {
+        telemetry.addData("Direction with Touch", "Forward");
+        telemetry.update();
+        //Initialize the digital touch to false.
+        digitalTouch.setState(false);
+
+        while (digitalTouch.getState()) {
+            moveForward(2);
+        }
+
+        telemetry.addData("Digital sensor touched the wall", digitalTouch.getState());
+        telemetry.update();
+    }
+
+    public boolean getTouchSensorState() {
+        return digitalTouch.getState();
+    }
+
     public void moveForward(long distance) {
         int TargetTicks_FL = (int) (distance/movementFactor1);
         int TargetTicks_BL = (int) (distance/movementFactor1);
@@ -271,8 +292,8 @@ public class Robot  extends java.lang.Thread {
             }
 
  */
-           // while(Motor_BL.isBusy() || Motor_FL.isBusy() || Motor_BR.isBusy() || Motor_FR.isBusy()){
-            while(Motor_BL.isBusy()){
+          //while(Motor_BL.isBusy() && Motor_FL.isBusy() && Motor_BR.isBusy() && Motor_FR.isBusy()){
+            while(Motor_FL.isBusy()){
                 telemetry.addData("encoder-fwd", Motor_FL.getCurrentPosition() + "  busy=" + Motor_FL.isBusy());
                 telemetry.update();
 
@@ -369,7 +390,7 @@ public class Robot  extends java.lang.Thread {
 
             }*/
 
-           // while(Motor_BL.isBusy() || Motor_FL.isBusy() || Motor_BR.isBusy() || Motor_FR.isBusy()){
+           // while(Motor_BL.isBusy() && Motor_FL.isBusy() && Motor_BR.isBusy() && Motor_FR.isBusy()){
             while(Motor_BL.isBusy()) {
                 telemetry.addData("encoder-fwd", Motor_FL.getCurrentPosition() + "  busy=" + Motor_FL.isBusy());
                 telemetry.update();
@@ -462,7 +483,7 @@ public class Robot  extends java.lang.Thread {
             telemetry.addData("FR target position after run", Motor_FR.getCurrentPosition());
             telemetry.addData("BR target position after run", Motor_BR.getCurrentPosition());
 
-            //while(Motor_BL.isBusy() || Motor_FL.isBusy() || Motor_BR.isBusy() || Motor_FR.isBusy()){
+           // while(Motor_BL.isBusy() && Motor_FL.isBusy() && Motor_BR.isBusy() && Motor_FR.isBusy()){
             while(Motor_BL.isBusy()){
                 telemetry.addData("encoder-fwd", Motor_FL.getCurrentPosition() + "  busy=" + Motor_FL.isBusy());
                 telemetry.update();
@@ -754,6 +775,12 @@ public class Robot  extends java.lang.Thread {
         flap = hardwareMap.get(Servo.class, "p_flap");
         flap.resetDeviceConfigurationForOpMode();
         flap.setDirection(Servo.Direction.FORWARD);
+
+        //Initialize sensor
+        digitalTouch = hardwareMap.get(DigitalChannel.class, "touch_sensor");
+        digitalTouch.setMode(DigitalChannel.Mode.INPUT);
+        digitalTouch.setState(false);
+
         //phook.s
  //       flap.setPosition(0.45);
 

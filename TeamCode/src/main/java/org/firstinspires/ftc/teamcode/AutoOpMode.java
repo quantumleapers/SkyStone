@@ -45,7 +45,9 @@ public class AutoOpMode extends LinearOpMode {
         } catch (Exception ex) {
 
         }
-        robot.moveForward(29);
+
+        robot.moveForward(30);
+        robot.moveForwardUntilTouch();
         try {
             Thread.sleep(500);
         } catch (Exception ex) {
@@ -62,8 +64,8 @@ public class AutoOpMode extends LinearOpMode {
 
         robot.moveLeft(34);
         robot.moveBackward(17);
-        robot.moveRight(8);
-        robot.moveForward(13);
+        robot.moveRight(10);
+        robot.moveForward(14);
         robot.moveLeft(24);
 /*
         robot.engageSlider(2500);
