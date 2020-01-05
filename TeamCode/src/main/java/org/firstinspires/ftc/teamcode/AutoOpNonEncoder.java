@@ -22,6 +22,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @Autonomous(name="AutoOpBlueNonEncoder", group="Linear Opmode")
 public class AutoOpNonEncoder extends LinearOpMode {
 
+    private static final double power = 1;
     private ElapsedTime aRuntime = new ElapsedTime();
 
     @Override
@@ -34,36 +35,34 @@ public class AutoOpNonEncoder extends LinearOpMode {
         waitForStart();
         aRuntime.reset();
         Robot robot = new Robot(hardwareMap, telemetry);
-        robot.moveB(27);
-        robot.moveR(108);
-
-        robot.moveB(48);
-
+        robot.moveB(27, power);
+        robot.moveR(22, power);
+        robot.moveB(36, power);
+        robot.moveB(100, 0.1);
         robot.engageHooks(72);
-        robot.moveFlap();
+      //  robot.moveFlap();
         try {
             Thread.sleep(500);
         } catch (Exception ex) {
 
         }
-        robot.moveF(83);
-        try {
-            Thread.sleep(500);
-        } catch (Exception ex) {
-
-        }
+        robot.moveF(83, power);
+        robot.moveF(50, 0.2);
         robot.engageHooks(-72);
-
-
         try {
             Thread.sleep(500);
         } catch (Exception ex) {
 
         }
 
-        robot.moveL(108);
-        robot.moveB(11);
-        robot.moveL(50);
+        robot.moveL(70, power);
+        robot.moveB(36, power);
+        robot.moveR(45, 0.5);
+        robot.moveF(35, power);
+        robot.moveL(80, power);
+        robot.moveF(50, 0.2);
+      //  robot.moveB(4, power);
+       // robot.moveL(50, power);
 
 
 /*

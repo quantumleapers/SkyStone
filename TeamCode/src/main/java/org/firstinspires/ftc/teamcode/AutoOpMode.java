@@ -22,6 +22,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @Autonomous(name="AutoOpBlue", group="Linear Opmode")
 public class AutoOpMode extends LinearOpMode {
 
+    static final double power = 0.9;
     private ElapsedTime aRuntime = new ElapsedTime();
 
     @Override
@@ -34,9 +35,9 @@ public class AutoOpMode extends LinearOpMode {
         waitForStart();
         aRuntime.reset();
         Robot robot = new Robot(hardwareMap, telemetry);
-        robot.moveBackward(12);
-        robot.moveRight(34);
-        robot.moveBackward(17);
+        robot.moveBackward(12, power);
+        robot.moveRight(34, power);
+        robot.moveBackward(18, power);
 
         robot.engageHooks(72);
         robot.moveFlap();
@@ -46,7 +47,7 @@ public class AutoOpMode extends LinearOpMode {
 
         }
 
-        robot.moveForward(30);
+        robot.moveForward(30, power);
         robot.moveForwardUntilTouch();
         try {
             Thread.sleep(500);
@@ -62,11 +63,11 @@ public class AutoOpMode extends LinearOpMode {
 
         }
 
-        robot.moveLeft(34);
-        robot.moveBackward(17);
-        robot.moveRight(10);
-        robot.moveForward(14);
-        robot.moveLeft(24);
+        robot.moveLeft(34, power);
+        robot.moveBackward(17, power);
+        robot.moveRight(10, power);
+        robot.moveForward(14, power);
+        robot.moveLeft(24, power);
 /*
         robot.engageSlider(2500);
         try {
