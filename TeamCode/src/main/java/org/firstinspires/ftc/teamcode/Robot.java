@@ -39,6 +39,7 @@ public class Robot  extends java.lang.Thread {
     //public double movementFactor1 = .0084169444;
     public float movementFactor1 = (float)(WheelDiameter*Pi/EncoderTicks);
     public  long movementFactor = 20;
+
     DigitalChannel digitalTouch;
 
     Robot(HardwareMap map, Telemetry tel) {
@@ -67,6 +68,48 @@ public class Robot  extends java.lang.Thread {
         telemetry.addData("Direction", "Rev motor right trigger");
         telemetry.update();
         if (isTeleOp == false) pause(250);
+    }
+
+    public void rotateClockWise(long degree, double power) {
+        telemetry.addData("Direction", "Clockwise");
+        telemetry.update();
+        Motor_FL.setPower(power);
+        Motor_FR.setPower(power);
+        Motor_BR.setPower(power);
+        Motor_BL.setPower(power);
+        long rotationFactor = 7;
+        try {
+            sleep(degree * rotationFactor);
+        } catch (Exception e) {
+        }
+        Motor_FL.setPower(0);
+        Motor_FR.setPower(0);
+        Motor_BR.setPower(0);
+        Motor_BL.setPower(0);
+        telemetry.addData("Direction", "ClockWise");
+        telemetry.update();
+        if (isTeleOp == true) pause(250);
+    }
+
+    public void rotateAntiClockWise(long degree, double power) {
+        telemetry.addData("Direction", "AntiClockwise");
+        telemetry.update();
+        Motor_FL.setPower(-1 * power);
+        Motor_FR.setPower(-1 * power);
+        Motor_BR.setPower(-1 * power);
+        Motor_BL.setPower(-1 * power);
+        long rotationFactor = 7;
+        try {
+            sleep(degree * rotationFactor);
+        } catch (Exception e) {
+        }
+        Motor_FL.setPower(0);
+        Motor_FR.setPower(0);
+        Motor_BR.setPower(0);
+        Motor_BL.setPower(0);
+        telemetry.addData("Direction", "Anti ClockWise");
+        telemetry.update();
+        if (isTeleOp == true) pause(250);
     }
 
 
