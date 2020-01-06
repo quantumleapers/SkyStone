@@ -130,7 +130,7 @@ public class Robot  extends java.lang.Thread {
         Motor_BL.setPower(0);
         telemetry.addData("Direction", "Backward");
         telemetry.update();
-        if (isTeleOp == true) pause(250);
+        //if (isTeleOp == true) pause(250);
     }
 
     public void moveF(long distance, double power) {
@@ -150,7 +150,7 @@ public class Robot  extends java.lang.Thread {
         Motor_BL.setPower(0);
         telemetry.addData("Direction", "Forward");
         telemetry.update();
-        if (isTeleOp == true) pause(250);
+        //if (isTeleOp == true) pause(250);
     }
 
     public void moveForwardUntilTouch() {
@@ -576,7 +576,7 @@ public class Robot  extends java.lang.Thread {
         Motor_BL.setPower(0);
         telemetry.addData("Direction", "Left");
         telemetry.update();
-        if (isTeleOp == true) pause(250);
+        //if (isTeleOp == true) pause(250);
     }
 
     public void moveR(long distance, double power) {
@@ -596,7 +596,7 @@ public class Robot  extends java.lang.Thread {
         Motor_BL.setPower(0);
         telemetry.addData("Direction", "Right");
         telemetry.update();
-        if (isTeleOp == true) pause(250);
+       // if (isTeleOp == true) pause(250);
     }
 
     public void moveRightHookToLatch() {
