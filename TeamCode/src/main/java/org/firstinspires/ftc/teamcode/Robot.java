@@ -640,7 +640,7 @@ public class Robot  extends java.lang.Thread {
 
     }
 
-    public void moveFlap() {
+    public void engageFlap() {
         //double power = -1;
 
         // phook.setPosition(0);
@@ -653,18 +653,34 @@ public class Robot  extends java.lang.Thread {
         } catch (Exception ex) {
 
         }
-
-
-
-
-
-
-
         telemetry.addData("servo moder ", "flap test");
         telemetry.update();
+    }
+    public void disengageFlap() {
+        //double power = -1;
 
+        // phook.setPosition(0);
+        flap.setPosition(-0.97);
+        telemetry.addData("position ", flap.getPosition());
+        telemetry.update();
+
+        try {
+            Thread.sleep(500);
+        } catch (Exception ex) {
+
+        }
+        telemetry.addData("servo moder ", "flap test");
+        telemetry.update();
     }
 
+   public void resetDcMotorsToUseNonEncode()
+    {
+        Motor_FL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Motor_BL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Motor_FR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Motor_BR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+    }
     public void engageSlider(int ticks) {
 
         telemetry.addData( "Move slider", p_slide.getCurrentPosition());

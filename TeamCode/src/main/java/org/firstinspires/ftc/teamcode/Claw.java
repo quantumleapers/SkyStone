@@ -35,11 +35,11 @@ public class Claw extends java.lang.Thread {
     public void moveFlap () throws InterruptedException {
         flap.setPosition(.97);
 
-        sleep(1000);
+        sleep(500);
 
         flap.setPosition(.5);
 
-        sleep(1000);
+        sleep(500);
 
         flap.setPosition(.97);
 
