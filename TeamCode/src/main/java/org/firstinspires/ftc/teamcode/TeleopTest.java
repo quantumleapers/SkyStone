@@ -19,6 +19,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @Autonomous(name="TeleopTest", group="Linear Opmode")
 public class TeleopTest extends LinearOpMode{
 
+    static final double power = 0.9;
     private  ElapsedTime runtime = new ElapsedTime();
     private DcMotor MotorFl = null;
     private DcMotor MotorFr = null;
@@ -88,7 +89,7 @@ public class TeleopTest extends LinearOpMode{
             if (this.gamepad1.right_stick_y > 0.5) {
                 telemetry.addData("Game pad 1Moving", "Backward");
                 telemetry.update();
-                robot.moveB(1);
+                robot.moveB(1, power);
                 telemetry.addData("Moving Complete", "Backward");
                 telemetry.update();
             }
@@ -96,7 +97,7 @@ public class TeleopTest extends LinearOpMode{
             if (this.gamepad2.right_stick_y > 0.5) {
                 telemetry.addData("Moving", "Backward");
                 telemetry.update();
-                robot.moveB(1);
+                robot.moveB(1, power);
                 telemetry.addData("Moving Complete", "Backward");
                 telemetry.update();
             }
@@ -104,7 +105,7 @@ public class TeleopTest extends LinearOpMode{
             if (this.gamepad1.right_stick_y < -0.5) {
                 telemetry.addData("Moving", "Forward");
                 telemetry.update();
-                robot.moveF(1);
+                robot.moveF(1, power);
                 telemetry.addData("Moving Complete", "Backward");
                 telemetry.update();
             }
@@ -112,7 +113,7 @@ public class TeleopTest extends LinearOpMode{
             if (this.gamepad2.right_stick_y < -0.5) {
                 telemetry.addData("Moving", "Forward");
                 telemetry.update();
-                robot.moveF(1);
+                robot.moveF(1, power);
                 telemetry.addData("Moving Complete", "Backward");
                 telemetry.update();
             }
@@ -120,7 +121,7 @@ public class TeleopTest extends LinearOpMode{
             if (this.gamepad1.right_stick_x > 0.5) {
                 telemetry.addData("Moving", "Right");
                 telemetry.update();
-                robot.moveR(1);
+                robot.moveR(1, power);
                 telemetry.addData("Moving Complete", "Backward");
                 telemetry.update();
             }
@@ -128,7 +129,7 @@ public class TeleopTest extends LinearOpMode{
             if (this.gamepad2.right_stick_x > 0.5) {
                 telemetry.addData("Moving", "Right");
                 telemetry.update();
-                robot.moveR(1);
+                robot.moveR(1, power);
                 telemetry.addData("Moving Complete", "Backward");
                 telemetry.update();
             }
@@ -136,7 +137,7 @@ public class TeleopTest extends LinearOpMode{
             if (this.gamepad1.right_stick_x < -0.5) {
                 telemetry.addData("Moving", "Left");
                 telemetry.update();
-                robot.moveL(1);
+                robot.moveL(1, power);
                 telemetry.addData("Moving Complete", "Backward");
                 telemetry.update();
             }
@@ -144,7 +145,7 @@ public class TeleopTest extends LinearOpMode{
             if (this.gamepad2.right_stick_x < -0.5) {
                 telemetry.addData("Moving", "Left");
                 telemetry.update();
-                robot.moveL(1);
+                robot.moveL(1, power);
                 telemetry.addData("Moving Complete", "Backward");
                 telemetry.update();
             }

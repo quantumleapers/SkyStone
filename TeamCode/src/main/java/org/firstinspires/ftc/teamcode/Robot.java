@@ -5,6 +5,7 @@ import android.util.Log;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Gyroscope;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -39,6 +40,8 @@ public class Robot  extends java.lang.Thread {
     public float movementFactor1 = (float)(WheelDiameter*Pi/EncoderTicks);
     public  long movementFactor = 20;
 
+    DigitalChannel digitalTouch;
+
     Robot(HardwareMap map, Telemetry tel) {
         hardwareMap = map;
         telemetry = tel;
@@ -67,14 +70,56 @@ public class Robot  extends java.lang.Thread {
         if (isTeleOp == false) pause(250);
     }
 
+    public void rotateClockWise(long degree, double power) {
+        telemetry.addData("Direction", "Clockwise");
+        telemetry.update();
+        Motor_FL.setPower(power);
+        Motor_FR.setPower(power);
+        Motor_BR.setPower(power);
+        Motor_BL.setPower(power);
+        long rotationFactor = 7;
+        try {
+            sleep(degree * rotationFactor);
+        } catch (Exception e) {
+        }
+        Motor_FL.setPower(0);
+        Motor_FR.setPower(0);
+        Motor_BR.setPower(0);
+        Motor_BL.setPower(0);
+        telemetry.addData("Direction", "ClockWise");
+        telemetry.update();
+        if (isTeleOp == true) pause(250);
+    }
 
-    public void moveB(long distance) {
+    public void rotateAntiClockWise(long degree, double power) {
+        telemetry.addData("Direction", "AntiClockwise");
+        telemetry.update();
+        Motor_FL.setPower(-1 * power);
+        Motor_FR.setPower(-1 * power);
+        Motor_BR.setPower(-1 * power);
+        Motor_BL.setPower(-1 * power);
+        long rotationFactor = 7;
+        try {
+            sleep(degree * rotationFactor);
+        } catch (Exception e) {
+        }
+        Motor_FL.setPower(0);
+        Motor_FR.setPower(0);
+        Motor_BR.setPower(0);
+        Motor_BL.setPower(0);
+        telemetry.addData("Direction", "Anti ClockWise");
+        telemetry.update();
+        if (isTeleOp == true) pause(250);
+    }
+
+
+    public void moveB(long distance, double power) {
         telemetry.addData("Direction", "Backword");
         telemetry.update();
-        Motor_FL.setPower(1);
-        Motor_FR.setPower(-1);
-        Motor_BR.setPower(1);
-        Motor_BL.setPower(-1);
+        Motor_FL.setPower(power);
+        Motor_FR.setPower(-1 * power);
+        Motor_BR.setPower(power);
+        Motor_BL.setPower(-1 * power);
         try {
             sleep(distance * movementFactor);
         } catch (Exception e) {
@@ -88,13 +133,13 @@ public class Robot  extends java.lang.Thread {
         if (isTeleOp == true) pause(250);
     }
 
-    public void moveF(long distance) {
+    public void moveF(long distance, double power) {
         telemetry.addData("Direction", "Forward");
         telemetry.update();
-        Motor_FL.setPower(-1);
-        Motor_FR.setPower(1);
-        Motor_BR.setPower(-1);
-        Motor_BL.setPower(1);
+        Motor_FL.setPower(-1 * power);
+        Motor_FR.setPower(power);
+        Motor_BR.setPower(-1 * power);
+        Motor_BL.setPower(power);
         try {
             sleep(distance * movementFactor);
         } catch (Exception e) {
@@ -107,7 +152,26 @@ public class Robot  extends java.lang.Thread {
         telemetry.update();
         if (isTeleOp == true) pause(250);
     }
-    public void moveForward(long distance) {
+
+    public void moveForwardUntilTouch() {
+        telemetry.addData("Direction with Touch", "Forward");
+        telemetry.update();
+        //Initialize the digital touch to false.
+        digitalTouch.setState(false);
+
+        while (digitalTouch.getState()) {
+            moveForward(2, 0.9);
+        }
+
+        telemetry.addData("Digital sensor touched the wall", digitalTouch.getState());
+        telemetry.update();
+    }
+
+    public boolean getTouchSensorState() {
+        return digitalTouch.getState();
+    }
+
+    public void moveForward(long distance, double power) {
         int TargetTicks_FL = (int) (distance/movementFactor1);
         int TargetTicks_BL = (int) (distance/movementFactor1);
         int TargetTicks_FR = (int) (distance/movementFactor1);
@@ -155,10 +219,10 @@ public class Robot  extends java.lang.Thread {
             Motor_FR.setTargetPosition(TargetTicks_FR);
 
 
-            Motor_FL.setPower(1); //FL
-            Motor_FR.setPower(1); //FR
-            Motor_BR.setPower(1); //BR
-            Motor_BL.setPower(1); //BL
+            Motor_FL.setPower(Math.abs(power)); //FL
+            Motor_FR.setPower(Math.abs(power)); //FR
+            Motor_BR.setPower(Math.abs(power)); //BR
+            Motor_BL.setPower(Math.abs(power)); //BL
 
             telemetry.addData("FL target position after run", Motor_FL.getCurrentPosition());
             telemetry.addData("BL target position after run", Motor_BL.getCurrentPosition());
@@ -171,8 +235,8 @@ public class Robot  extends java.lang.Thread {
 
             }*/
 
-          // while(Motor_BL.isBusy() || Motor_FL.isBusy() || Motor_BR.isBusy() || Motor_FR.isBusy()){
-            while(Motor_BL.isBusy()) {
+            while(Motor_BL.isBusy() && Motor_FL.isBusy() && Motor_BR.isBusy() && Motor_FR.isBusy()){
+            //while(Motor_BL.isBusy()) {
                 telemetry.addData("encoder-fwd", Motor_FL.getCurrentPosition() + "  busy=" + Motor_FL.isBusy());
                 telemetry.update();
             }
@@ -206,7 +270,7 @@ public class Robot  extends java.lang.Thread {
 
     }
 
-    public void moveBackward(long distance) {
+    public void moveBackward(long distance, double power) {
         int TargetTicks_FL = (int) (distance/movementFactor1);
         int TargetTicks_BL = (int) (distance/movementFactor1);
         int TargetTicks_FR = (int) (distance/movementFactor1);
@@ -254,10 +318,10 @@ public class Robot  extends java.lang.Thread {
             Motor_FR.setTargetPosition(TargetTicks_FR);
 
 
-            Motor_FL.setPower(1); //FL
-            Motor_FR.setPower(0.7); //FR
-            Motor_BR.setPower(1.0); //BR
-            Motor_BL.setPower(0.7); //BL
+            Motor_FL.setPower(Math.abs(power)); //FL
+            Motor_FR.setPower(Math.abs(power)); //FR
+            Motor_BR.setPower(Math.abs(power)); //BR
+            Motor_BL.setPower(Math.abs(power)); //BL
 
             telemetry.addData("FL target position after run", Motor_FL.getCurrentPosition());
             telemetry.addData("BL target position after run", Motor_BL.getCurrentPosition());
@@ -271,8 +335,8 @@ public class Robot  extends java.lang.Thread {
             }
 
  */
-           // while(Motor_BL.isBusy() || Motor_FL.isBusy() || Motor_BR.isBusy() || Motor_FR.isBusy()){
-            while(Motor_BL.isBusy()){
+          while(Motor_BL.isBusy() && Motor_FL.isBusy() && Motor_BR.isBusy() && Motor_FR.isBusy()){
+          //  while(Motor_FL.isBusy()){
                 telemetry.addData("encoder-fwd", Motor_FL.getCurrentPosition() + "  busy=" + Motor_FL.isBusy());
                 telemetry.update();
 
@@ -305,7 +369,7 @@ public class Robot  extends java.lang.Thread {
 
     }
 
-    public void moveLeft(long distance) {
+    public void moveLeft(long distance, double power) {
         int TargetTicks_FL = (int) (distance/movementFactor1);
         int TargetTicks_BL = (int) (distance/movementFactor1);
         int TargetTicks_FR = (int) (distance/movementFactor1);
@@ -353,10 +417,10 @@ public class Robot  extends java.lang.Thread {
             Motor_FR.setTargetPosition(TargetTicks_FR);
 
 
-            Motor_FL.setPower(1); //FL
-            Motor_FR.setPower(1); //FR
-            Motor_BR.setPower(1); //BR
-            Motor_BL.setPower(1); //BL
+            Motor_FL.setPower(Math.abs(power)); //FL
+            Motor_FR.setPower(Math.abs(power)); //FR
+            Motor_BR.setPower(Math.abs(power)); //BR
+            Motor_BL.setPower(Math.abs(power)); //BL
 
             telemetry.addData("FL target position after run", Motor_FL.getCurrentPosition());
             telemetry.addData("BL target position after run", Motor_BL.getCurrentPosition());
@@ -369,8 +433,8 @@ public class Robot  extends java.lang.Thread {
 
             }*/
 
-           // while(Motor_BL.isBusy() || Motor_FL.isBusy() || Motor_BR.isBusy() || Motor_FR.isBusy()){
-            while(Motor_BL.isBusy()) {
+            while(Motor_BL.isBusy() && Motor_FL.isBusy() && Motor_BR.isBusy() && Motor_FR.isBusy()){
+           // while(Motor_BL.isBusy()) {
                 telemetry.addData("encoder-fwd", Motor_FL.getCurrentPosition() + "  busy=" + Motor_FL.isBusy());
                 telemetry.update();
             }
@@ -404,7 +468,7 @@ public class Robot  extends java.lang.Thread {
 
     }
 
-    public void moveRight(long distance) {
+    public void moveRight(long distance, double power) {
         int TargetTicks_FL = (int) (distance/movementFactor1);
         int TargetTicks_BL = (int) (distance/movementFactor1);
         int TargetTicks_FR = (int) (distance/movementFactor1);
@@ -452,18 +516,18 @@ public class Robot  extends java.lang.Thread {
             Motor_FR.setTargetPosition(TargetTicks_FR);
 
 
-            Motor_FL.setPower(1); //FL
-            Motor_FR.setPower(1); //FR
-            Motor_BR.setPower(1); //BR
-            Motor_BL.setPower(1); //BL
+            Motor_FL.setPower(Math.abs(power)); //FL
+            Motor_FR.setPower(Math.abs(power)); //FR
+            Motor_BR.setPower(Math.abs(power)); //BR
+            Motor_BL.setPower(Math.abs(power)); //BL
 
             telemetry.addData("FL target position after run", Motor_FL.getCurrentPosition());
             telemetry.addData("BL target position after run", Motor_BL.getCurrentPosition());
             telemetry.addData("FR target position after run", Motor_FR.getCurrentPosition());
             telemetry.addData("BR target position after run", Motor_BR.getCurrentPosition());
 
-            //while(Motor_BL.isBusy() || Motor_FL.isBusy() || Motor_BR.isBusy() || Motor_FR.isBusy()){
-            while(Motor_BL.isBusy()){
+            while(Motor_BL.isBusy() && Motor_FL.isBusy() && Motor_BR.isBusy() && Motor_FR.isBusy()){
+           // while(Motor_BL.isBusy()){
                 telemetry.addData("encoder-fwd", Motor_FL.getCurrentPosition() + "  busy=" + Motor_FL.isBusy());
                 telemetry.update();
 
@@ -496,8 +560,7 @@ public class Robot  extends java.lang.Thread {
 
     }
 
-    public void moveL(long distance) {
-        double power = 1;
+    public void moveL(long distance, double power) {
 
         Motor_FL.setPower(power );
         Motor_FR.setPower(power);
@@ -516,8 +579,7 @@ public class Robot  extends java.lang.Thread {
         if (isTeleOp == true) pause(250);
     }
 
-    public void moveR(long distance) {
-        double power = 1;
+    public void moveR(long distance, double power) {
 
         Motor_FL.setPower((-1) * power);
         Motor_FR.setPower((-1) * power);
@@ -754,6 +816,12 @@ public class Robot  extends java.lang.Thread {
         flap = hardwareMap.get(Servo.class, "p_flap");
         flap.resetDeviceConfigurationForOpMode();
         flap.setDirection(Servo.Direction.FORWARD);
+
+        //Initialize sensor
+        digitalTouch = hardwareMap.get(DigitalChannel.class, "touch_sensor");
+        digitalTouch.setMode(DigitalChannel.Mode.INPUT);
+        digitalTouch.setState(false);
+
         //phook.s
  //       flap.setPosition(0.45);
 
