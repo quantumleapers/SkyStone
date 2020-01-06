@@ -685,9 +685,18 @@ public class Robot  extends java.lang.Thread {
 
         telemetry.addData( "Move slider", p_slide.getCurrentPosition());
         telemetry.update();
-
+        long currentPos =0;
         try {
             // sleep(distance * movementFactor);
+
+            if (ticks <-2500 || ticks >2500) {
+                return;
+            }
+            currentPos =p_slide.getCurrentPosition();
+            if ((ticks + currentPos > 2500) || (ticks + currentPos < -2500))
+            return;
+
+
             p_slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             p_slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             p_slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);

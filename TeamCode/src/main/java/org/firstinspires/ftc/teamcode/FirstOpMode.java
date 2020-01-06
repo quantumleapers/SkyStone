@@ -8,6 +8,9 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
 @TeleOp(name="FirstOpMode257", group="Linear Opmode")
 public class FirstOpMode extends LinearOpMode{
 
@@ -84,7 +87,7 @@ public class FirstOpMode extends LinearOpMode{
                 telemetry.addData("Game pad 1Moving", "Backward");
                 telemetry.update();
                // robot.moveRevMotor(1);
-                robot.moveB(2, power);
+                robot.moveB(10, power);
                 telemetry.addData("Moving Complete", "Backward");
                 telemetry.update();
             }
@@ -94,7 +97,7 @@ public class FirstOpMode extends LinearOpMode{
             if (this.gamepad2.right_stick_y > 0.5) {
                 telemetry.addData("Moving", "Backward");
                 telemetry.update();
-                robot.moveB(2, power);
+                robot.moveB(10, power);
                 telemetry.addData("Moving Complete", "Backward");
                 telemetry.update();
             }
@@ -102,7 +105,7 @@ public class FirstOpMode extends LinearOpMode{
             if (this.gamepad1.right_stick_y < -0.5) {
                 telemetry.addData("Moving", "Forward");
                 telemetry.update();
-                robot.moveF(2, power);
+                robot.moveF(10, power);
                 telemetry.addData("Moving Complete", "Backward");
                 telemetry.update();
             }
@@ -110,7 +113,7 @@ public class FirstOpMode extends LinearOpMode{
             if (this.gamepad2.right_stick_y < -0.5) {
                 telemetry.addData("Moving", "Forward");
                 telemetry.update();
-                robot.moveF(2, power);
+                robot.moveF(10, power);
                 telemetry.addData("Moving Complete", "Backward");
                 telemetry.update();
             }
@@ -174,6 +177,34 @@ public class FirstOpMode extends LinearOpMode{
                 telemetry.update();
                 robot.disengageFlap();
                 telemetry.addData("Moving Complete", "de-engage flap");
+                telemetry.update();
+            }
+            if (this.gamepad1.right_bumper == TRUE) {
+                telemetry.addData("Moving", "engage slider");
+                telemetry.update();
+                robot.engageSlider(2500);
+                telemetry.addData("Moving Complete", "engage slider");
+                telemetry.update();
+            }
+            if (this.gamepad1.left_bumper == TRUE) {
+                telemetry.addData("Moving", "de-engage slider");
+                telemetry.update();
+                robot.engageSlider(-2500);
+                telemetry.addData("Moving Complete", "de-engage slider");
+                telemetry.update();
+            }
+            if (this.gamepad1.x == TRUE) {
+                telemetry.addData("Moving", "engage  phooks");
+                telemetry.update();
+                robot.engageHooks(72);
+                telemetry.addData("Moving Complete", "engage  phooks");
+                telemetry.update();
+            }
+            if (this.gamepad1.b == TRUE) {
+                telemetry.addData("Moving", "disengage  phooks");
+                telemetry.update();
+                robot.engageHooks(-72);
+                telemetry.addData("Moving Complete", "disengage  phooks");
                 telemetry.update();
             }
 /*
