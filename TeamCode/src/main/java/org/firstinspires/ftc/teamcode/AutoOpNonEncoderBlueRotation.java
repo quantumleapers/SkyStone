@@ -24,7 +24,7 @@ public class AutoOpNonEncoderBlueRotation extends LinearOpMode {
         Robot robot = new Robot(hardwareMap, telemetry);
         robot.moveB(27, power);
         robot.moveR(22, power);
-        robot.moveB(36, power);
+        robot.moveBForRotation(39, power);
         robot.moveB(100, 0.1);
         robot.engageHooks(72);
       //  robot.moveFlap();
@@ -33,17 +33,18 @@ public class AutoOpNonEncoderBlueRotation extends LinearOpMode {
         } catch (Exception ex) {
 
         }
-        robot.moveF(80, power);
-        robot.rotateClockWise(24, 0.5);
-        robot.moveF(50, 0.2);
+        robot.moveF(82, power);
+        robot.rotateClockWise(30, 0.5);
         robot.engageHooks(-72);
+      //  robot.moveF(55, 0.2);
+
         try {
             Thread.sleep(500);
         } catch (Exception ex) {
 
         }
         robot.moveL(72, power);
-        robot.rotateAntiClockWise(24, 0.5);
+        robot.rotateAntiClockWise(30, 0.5);
         robot.moveL(72, power);
        // robot.moveB(36, power);
         //robot.moveR(45, 0.5);

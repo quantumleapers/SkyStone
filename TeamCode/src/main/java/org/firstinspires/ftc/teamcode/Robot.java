@@ -77,7 +77,7 @@ public class Robot  extends java.lang.Thread {
         Motor_FR.setPower(power);
         Motor_BR.setPower(power);
         Motor_BL.setPower(power);
-        long rotationFactor = 7;
+        long rotationFactor = 24;
         try {
             sleep(degree * rotationFactor);
         } catch (Exception e) {
@@ -119,6 +119,26 @@ public class Robot  extends java.lang.Thread {
         Motor_FL.setPower(power);
         Motor_FR.setPower(-1 * power);
         Motor_BR.setPower(power);
+        Motor_BL.setPower(-1 * power);
+        try {
+            sleep(distance * movementFactor);
+        } catch (Exception e) {
+        }
+        Motor_FL.setPower(0);
+        Motor_FR.setPower(0);
+        Motor_BR.setPower(0);
+        Motor_BL.setPower(0);
+        telemetry.addData("Direction", "Backward");
+        telemetry.update();
+        if (isTeleOp == true) pause(250);
+    }
+    // Remove this extra function when required
+    public void moveBForRotation(long distance, double power) {
+        telemetry.addData("Direction", "Backword");
+        telemetry.update();
+        Motor_FL.setPower(0.9);
+        Motor_FR.setPower(-1 * power);
+        Motor_BR.setPower(0.9);
         Motor_BL.setPower(-1 * power);
         try {
             sleep(distance * movementFactor);
