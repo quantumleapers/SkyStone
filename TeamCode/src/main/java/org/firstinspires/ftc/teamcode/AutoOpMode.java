@@ -40,7 +40,7 @@ public class AutoOpMode extends LinearOpMode {
         robot.moveBackward(18, power);
 
         robot.engageHooks(72);
-        robot.moveFlap();
+       // robot.moveFlap();
         try {
             Thread.sleep(500);
         } catch (Exception ex) {

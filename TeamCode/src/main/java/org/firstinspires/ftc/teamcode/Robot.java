@@ -130,7 +130,7 @@ public class Robot  extends java.lang.Thread {
         Motor_BL.setPower(0);
         telemetry.addData("Direction", "Backward");
         telemetry.update();
-        if (isTeleOp == true) pause(250);
+        //if (isTeleOp == true) pause(250);
     }
     // Remove this extra function when required
     public void moveBForRotation(long distance, double power) {
@@ -170,7 +170,7 @@ public class Robot  extends java.lang.Thread {
         Motor_BL.setPower(0);
         telemetry.addData("Direction", "Forward");
         telemetry.update();
-        if (isTeleOp == true) pause(250);
+        //if (isTeleOp == true) pause(250);
     }
 
     public void moveForwardUntilTouch() {
@@ -596,7 +596,7 @@ public class Robot  extends java.lang.Thread {
         Motor_BL.setPower(0);
         telemetry.addData("Direction", "Left");
         telemetry.update();
-        if (isTeleOp == true) pause(250);
+        //if (isTeleOp == true) pause(250);
     }
 
     public void moveR(long distance, double power) {
@@ -616,7 +616,7 @@ public class Robot  extends java.lang.Thread {
         Motor_BL.setPower(0);
         telemetry.addData("Direction", "Right");
         telemetry.update();
-        if (isTeleOp == true) pause(250);
+       // if (isTeleOp == true) pause(250);
     }
 
     public void moveRightHookToLatch() {
@@ -660,7 +660,7 @@ public class Robot  extends java.lang.Thread {
 
     }
 
-    public void moveFlap() {
+    public void engageFlap() {
         //double power = -1;
 
         // phook.setPosition(0);
@@ -673,25 +673,50 @@ public class Robot  extends java.lang.Thread {
         } catch (Exception ex) {
 
         }
-
-
-
-
-
-
-
         telemetry.addData("servo moder ", "flap test");
         telemetry.update();
+    }
+    public void disengageFlap() {
+        //double power = -1;
 
+        // phook.setPosition(0);
+        flap.setPosition(-0.97);
+        telemetry.addData("position ", flap.getPosition());
+        telemetry.update();
+
+        try {
+            Thread.sleep(500);
+        } catch (Exception ex) {
+
+        }
+        telemetry.addData("servo moder ", "flap test");
+        telemetry.update();
     }
 
+   public void resetDcMotorsToUseNonEncode()
+    {
+        Motor_FL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Motor_BL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Motor_FR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Motor_BR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+    }
     public void engageSlider(int ticks) {
 
         telemetry.addData( "Move slider", p_slide.getCurrentPosition());
         telemetry.update();
-
+        long currentPos =0;
         try {
             // sleep(distance * movementFactor);
+
+            if (ticks <-2500 || ticks >2500) {
+                return;
+            }
+            currentPos =p_slide.getCurrentPosition();
+            if ((ticks + currentPos > 2500) || (ticks + currentPos < -2500))
+            return;
+
+
             p_slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             p_slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             p_slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
