@@ -24,7 +24,7 @@ public class AutoOpNonEncoderBlueRotation extends LinearOpMode {
         Robot robot = new Robot(hardwareMap, telemetry);
         robot.moveB(27, power);
         robot.moveR(22, power);
-        robot.moveBForRotation(39, power);
+        robot.moveBForFoundation(39, power);
         robot.moveB(100, 0.1);
         robot.engageHooks(72);
         //robot.moveFlap();
