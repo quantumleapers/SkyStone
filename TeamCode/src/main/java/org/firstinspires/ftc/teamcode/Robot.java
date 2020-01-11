@@ -144,8 +144,8 @@ public class Robot  extends java.lang.Thread {
         telemetry.update();
 
     }
-    // Remove this extra function when required
-    public void moveBForRotation(long distance, double power) {
+
+    public void moveBForFoundation(long distance, double power) {
         telemetry.addData("Direction", "Backword");
         telemetry.update();
         Motor_FL.setPower(0.9);
@@ -163,6 +163,46 @@ public class Robot  extends java.lang.Thread {
         telemetry.addData("Direction", "Backward");
         telemetry.update();
         if (isTeleOp == true) pause(250);
+    }
+
+    public void moveBForRedFoundation(long distance, double power) {
+        telemetry.addData("Direction", "Backword");
+        telemetry.update();
+        Motor_FL.setPower(power);
+        Motor_FR.setPower(-1 * 0.9);
+        Motor_BR.setPower(power);
+        Motor_BL.setPower(-1 * 0.9);
+        try {
+            sleep(distance * movementFactor);
+        } catch (Exception e) {
+        }
+        Motor_FL.setPower(0);
+        Motor_FR.setPower(0);
+        Motor_BR.setPower(0);
+        Motor_BL.setPower(0);
+        telemetry.addData("Direction", "Backward");
+        telemetry.update();
+        if (isTeleOp == true) pause(250);
+    }
+
+    public void moveFForRedFoundation(long distance, double power) {
+        telemetry.addData("Direction", "Forward");
+        telemetry.update();
+        Motor_FL.setPower(-1 * power);
+        Motor_FR.setPower(0.9);
+        Motor_BR.setPower(-1 * power);
+        Motor_BL.setPower(0.9);
+        try {
+            sleep(distance * movementFactor);
+        } catch (Exception e) {
+        }
+        Motor_FL.setPower(0);
+        Motor_FR.setPower(0);
+        Motor_BR.setPower(0);
+        Motor_BL.setPower(0);
+        telemetry.addData("Direction", "Forward");
+        telemetry.update();
+        //if (isTeleOp == true) pause(250);
     }
 
     public void moveF(long distance, double power) {
