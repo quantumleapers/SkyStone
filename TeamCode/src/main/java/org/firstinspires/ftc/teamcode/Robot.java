@@ -132,6 +132,18 @@ public class Robot  extends java.lang.Thread {
         telemetry.update();
         //if (isTeleOp == true) pause(250);
     }
+
+    public void moveB(double power) {
+        telemetry.addData("Direction", "Backword");
+        telemetry.update();
+        Motor_FL.setPower(power);
+        Motor_FR.setPower(-1 * power);
+        Motor_BR.setPower(power);
+        Motor_BL.setPower(-1 * power);
+        telemetry.addData("Direction", "Backward");
+        telemetry.update();
+
+    }
     // Remove this extra function when required
     public void moveBForRotation(long distance, double power) {
         telemetry.addData("Direction", "Backword");
@@ -171,6 +183,18 @@ public class Robot  extends java.lang.Thread {
         telemetry.addData("Direction", "Forward");
         telemetry.update();
         //if (isTeleOp == true) pause(250);
+    }
+
+    public void moveF(double power) {
+        telemetry.addData("Direction", "Forward");
+        telemetry.update();
+        Motor_FL.setPower(-1 * power);
+        Motor_FR.setPower(power);
+        Motor_BR.setPower(-1 * power);
+        Motor_BL.setPower(power);
+        telemetry.addData("Direction", "Forward");
+        telemetry.update();
+
     }
 
     public void moveForwardUntilTouch() {
@@ -599,6 +623,18 @@ public class Robot  extends java.lang.Thread {
         //if (isTeleOp == true) pause(250);
     }
 
+    public void moveL(double power) {
+
+        Motor_FL.setPower(power );
+        Motor_FR.setPower(power);
+        Motor_BR.setPower((-1) * power);
+        Motor_BL.setPower((-1) * power);
+
+        telemetry.addData("Direction", "Left");
+        telemetry.update();
+
+    }
+
     public void moveR(long distance, double power) {
 
         Motor_FL.setPower((-1) * power);
@@ -617,6 +653,24 @@ public class Robot  extends java.lang.Thread {
         telemetry.addData("Direction", "Right");
         telemetry.update();
        // if (isTeleOp == true) pause(250);
+    }
+
+    public void moveR(double power) {
+        Motor_FL.setPower((-1) * power);
+        Motor_FR.setPower((-1) * power);
+        Motor_BR.setPower(power );
+        Motor_BL.setPower(power);
+        telemetry.addData("Direction", "Right");
+        telemetry.update();
+    }
+
+    public void stopRobot() {
+        Motor_FL.setPower(0);
+        Motor_FR.setPower(0);
+        Motor_BR.setPower(0);
+        Motor_BL.setPower(0);
+        telemetry.addData("Robot", "Stop");
+        telemetry.update();
     }
 
     public void moveRightHookToLatch() {

@@ -81,13 +81,17 @@ public class FirstOpMode extends LinearOpMode{
 
             Robot robot = new Robot(hardwareMap, telemetry);
             robot.resetDcMotorsToUseNonEncode();
+            robot.stopRobot();
            // gamepad1 = new Gamepad();
 
             if (this.gamepad1.right_stick_y > 0.5) {
                 telemetry.addData("Game pad 1Moving", "Backward");
                 telemetry.update();
                // robot.moveRevMotor(1);
-                robot.moveB(10, power);
+                while (this.gamepad1.right_stick_y >= 0.5) {
+                    robot.moveB(power);
+                }
+                robot.stopRobot();
                 telemetry.addData("Moving Complete", "Backward");
                 telemetry.update();
             }
@@ -97,7 +101,11 @@ public class FirstOpMode extends LinearOpMode{
             if (this.gamepad2.right_stick_y > 0.5) {
                 telemetry.addData("Moving", "Backward");
                 telemetry.update();
-                robot.moveB(10, power);
+                while (this.gamepad2.right_stick_y >= 0.5) {
+                    robot.moveB(power);
+                }
+                robot.stopRobot();
+               // robot.moveB(10, power);
                 telemetry.addData("Moving Complete", "Backward");
                 telemetry.update();
             }
@@ -105,7 +113,10 @@ public class FirstOpMode extends LinearOpMode{
             if (this.gamepad1.right_stick_y < -0.5) {
                 telemetry.addData("Moving", "Forward");
                 telemetry.update();
-                robot.moveF(10, power);
+                while (this.gamepad1.right_stick_y <= -0.5) {
+                    robot.moveF(power);
+                }
+                robot.stopRobot();
                 telemetry.addData("Moving Complete", "Backward");
                 telemetry.update();
             }
@@ -113,7 +124,11 @@ public class FirstOpMode extends LinearOpMode{
             if (this.gamepad2.right_stick_y < -0.5) {
                 telemetry.addData("Moving", "Forward");
                 telemetry.update();
-                robot.moveF(10, power);
+                while(this.gamepad2.right_stick_y <= -0.5) {
+                    robot.moveF(power);
+                }
+                robot.stopRobot();
+                //robot.moveF(10, power);
                 telemetry.addData("Moving Complete", "Backward");
                 telemetry.update();
             }
@@ -121,7 +136,11 @@ public class FirstOpMode extends LinearOpMode{
             if (this.gamepad1.right_stick_x > 0.5) {
                 telemetry.addData("Moving", "Right");
                 telemetry.update();
-                robot.moveR(5, power);
+                while(this.gamepad1.right_stick_x >= 0.5) {
+                    robot.moveR(power);
+                }
+                robot.stopRobot();
+               // robot.moveR(5, power);
                 telemetry.addData("Moving Complete", "Right");
                 telemetry.update();
             }
@@ -129,7 +148,11 @@ public class FirstOpMode extends LinearOpMode{
             if (this.gamepad2.right_stick_x > 0.5) {
                 telemetry.addData("Moving", "Right");
                 telemetry.update();
-                robot.moveR(5, power);
+                while(this.gamepad2.right_stick_x >= 0.5) {
+                    robot.moveR(5, power);
+                }
+                robot.stopRobot();
+                //robot.moveR(5, power);
                 telemetry.addData("Moving Complete", "Right");
                 telemetry.update();
             }
@@ -137,7 +160,11 @@ public class FirstOpMode extends LinearOpMode{
             if (this.gamepad1.right_stick_x < -0.5) {
                 telemetry.addData("Moving", "Left");
                 telemetry.update();
-                robot.moveL(5, power);
+                while(this.gamepad1.right_stick_x <= -0.5) {
+                    robot.moveL(power);
+                }
+                robot.stopRobot();
+               // robot.moveL(5, power);
                 telemetry.addData("Moving Complete", "Left");
                 telemetry.update();
             }
@@ -145,7 +172,11 @@ public class FirstOpMode extends LinearOpMode{
             if (this.gamepad2.right_stick_x < -0.5) {
                 telemetry.addData("Moving", "Left");
                 telemetry.update();
-                robot.moveL(5, power);
+                while(this.gamepad2.right_stick_x <= -0.5) {
+                    robot.moveL(power);
+                }
+                robot.stopRobot();
+                //robot.moveL(5, power);
                 telemetry.addData("Moving Complete", "Left");
                 telemetry.update();
             }
