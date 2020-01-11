@@ -83,7 +83,7 @@ public class FirstOpMode extends LinearOpMode{
             robot.resetDcMotorsToUseNonEncode();
             // gamepad1 = new Gamepad();
 
-            if (this.gamepad2.right_stick_y > 0.5) {
+            if (this.gamepad1.right_stick_y > 0.5) {
                 telemetry.addData("Game pad 1Moving", "Backward");
                 telemetry.update();
                 // robot.moveRevMotor(1);
@@ -102,7 +102,7 @@ public class FirstOpMode extends LinearOpMode{
                 telemetry.update(); */
             }
 
-            if (this.gamepad2.right_stick_y < -0.5) {
+            if (this.gamepad1.right_stick_y < -0.5) {
                 telemetry.addData("Moving", "Forward");
                 telemetry.update();
                 robot.moveF(10, power);
@@ -118,7 +118,7 @@ public class FirstOpMode extends LinearOpMode{
                 telemetry.update(); */
             }
 
-            if (this.gamepad2.right_stick_x > 0.5) {
+            if (this.gamepad1.right_stick_x > 0.5) {
                 telemetry.addData("Moving", "Right");
                 telemetry.update();
                 robot.moveR(5, power);
@@ -134,7 +134,7 @@ public class FirstOpMode extends LinearOpMode{
                 telemetry.update(); */
             }
 
-            if (this.gamepad2.right_stick_x < -0.5) {
+            if (this.gamepad1.right_stick_x < -0.5) {
                 telemetry.addData("Moving", "Left");
                 telemetry.update();
                 robot.moveL(5, power);
@@ -150,7 +150,7 @@ public class FirstOpMode extends LinearOpMode{
                 telemetry.update();*/
             }
 
-            if (this.gamepad2.left_stick_x < -0.5) {
+            if (this.gamepad1.left_stick_x < -0.5) {
                 telemetry.addData("Moving", "clockwise rotation");
                 telemetry.update();
                 robot.rotateClockWise(100, power);
@@ -158,49 +158,49 @@ public class FirstOpMode extends LinearOpMode{
                 telemetry.update();
             }
 
-            if (this.gamepad2.left_stick_x > 0.5) {
+            if (this.gamepad1.left_stick_x > 0.5) {
                 telemetry.addData("Moving", "anticlockwise rotation");
                 telemetry.update();
                 robot.rotateAntiClockWise(100, power);
                 telemetry.addData("Moving Complete", "anticlockwise rotation");
                 telemetry.update();
             }
-            if (this.gamepad2.right_trigger > 0.1) {
+            if (this.gamepad1.right_trigger > 0.1) {
                 telemetry.addData("Moving", "engage flap");
                 telemetry.update();
                 robot.engageFlap();
                 telemetry.addData("Moving Complete", "engage flap");
                 telemetry.update();
             }
-            if (this.gamepad2.left_trigger> 0.1) {
+            if (this.gamepad1.left_trigger> 0.1) {
                 telemetry.addData("Moving", "de-engage flap");
                 telemetry.update();
                 robot.disengageFlap();
                 telemetry.addData("Moving Complete", "de-engage flap");
                 telemetry.update();
             }
-            if (this.gamepad2.right_bumper == TRUE) {
+            if (this.gamepad1.right_bumper == TRUE) {
                 telemetry.addData("Moving", "engage slider");
                 telemetry.update();
                 robot.engageSlider(2500);
                 telemetry.addData("Moving Complete", "engage slider");
                 telemetry.update();
             }
-            if (this.gamepad2.left_bumper == TRUE) {
+            if (this.gamepad1.left_bumper == TRUE) {
                 telemetry.addData("Moving", "de-engage slider");
                 telemetry.update();
                 robot.engageSlider(-2500);
                 telemetry.addData("Moving Complete", "de-engage slider");
                 telemetry.update();
             }
-            if (this.gamepad2.x == TRUE) {
+            if (this.gamepad1.x == TRUE) {
                 telemetry.addData("Moving", "engage  phooks");
                 telemetry.update();
                 robot.engageHooks(72);
                 telemetry.addData("Moving Complete", "engage  phooks");
                 telemetry.update();
             }
-            if (this.gamepad2.b == TRUE) {
+            if (this.gamepad1.b == TRUE) {
                 telemetry.addData("Moving", "disengage  phooks");
                 telemetry.update();
                 robot.engageHooks(-72);
