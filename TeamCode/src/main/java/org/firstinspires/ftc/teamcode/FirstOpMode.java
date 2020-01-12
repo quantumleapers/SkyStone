@@ -64,7 +64,8 @@ public class FirstOpMode extends LinearOpMode{
             // - This uses basic math to combine motions and is easier to drive straight.
             //double drive = -gamepad1.left_stick_y;
             //double turn  =  gamepad1.right_stick_x;
-            //leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
+            //leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;pwd
+            
             //rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
 
             // Tank Mode uses one stick to control each wheel.
@@ -82,6 +83,7 @@ public class FirstOpMode extends LinearOpMode{
             Robot robot = new Robot(hardwareMap, telemetry);
             robot.resetDcMotorsToUseNonEncode();
             robot.stopRobot();
+            robot.setTeleOp(true);
            // gamepad1 = new Gamepad();
 
             if (this.gamepad1.right_stick_y > 0.5) {
