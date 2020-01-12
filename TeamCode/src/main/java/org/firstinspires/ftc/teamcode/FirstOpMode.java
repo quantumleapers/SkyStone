@@ -15,7 +15,8 @@ import static java.lang.Boolean.TRUE;
 public class FirstOpMode extends LinearOpMode{
 
     private ElapsedTime runtime = new ElapsedTime();
-    static final double power =  1;
+    static double power =  1;
+    boolean slideback = false;
     private DcMotor MotorFl = null;
     private DcMotor MotorFr = null;
     private DcMotor MotorBl = null;
@@ -85,6 +86,39 @@ public class FirstOpMode extends LinearOpMode{
             robot.stopRobot();
             robot.setTeleOp(true);
            // gamepad1 = new Gamepad();
+
+            if(this.gamepad1.dpad_up){
+                telemetry.addData("Game pad 1Power", "100%");
+                telemetry.update();
+                power = 1;
+                telemetry.addData("Power Changed", "100%");
+                telemetry.update();
+
+            }
+            if(this.gamepad1.dpad_down){
+                telemetry.addData("Game pad 1Power", "10%");
+                telemetry.update();
+                power = 0.25;
+                telemetry.addData("Power Changed", "10%");
+                telemetry.update();
+
+            }
+            if(this.gamepad1.dpad_left){
+                telemetry.addData("Game pad 1Power", "25%");
+                telemetry.update();
+                power = 0.5;
+                telemetry.addData("Power Changed", "25%");
+                telemetry.update();
+
+            }
+            if(this.gamepad1.dpad_right){
+                telemetry.addData("Game pad 1Power", "50%");
+                telemetry.update();
+                power = 0.75;
+                telemetry.addData("Power Changed", "50%");
+                telemetry.update();
+
+            }
 
             if (this.gamepad1.right_stick_y > 0.5) {
                 telemetry.addData("Game pad 1Moving", "Backward");
@@ -212,17 +246,19 @@ public class FirstOpMode extends LinearOpMode{
                 telemetry.addData("Moving Complete", "de-engage flap");
                 telemetry.update();
             }
-            if (this.gamepad1.right_bumper == TRUE) {
+            if (this.gamepad1.right_bumper == TRUE && slideback == FALSE) {
                 telemetry.addData("Moving", "engage slider");
                 telemetry.update();
                 robot.engageSlider(2500);
+                slideback = true;
                 telemetry.addData("Moving Complete", "engage slider");
                 telemetry.update();
             }
-            if (this.gamepad1.left_bumper == TRUE) {
+            if (this.gamepad1.left_bumper == TRUE && slideback == TRUE) {
                 telemetry.addData("Moving", "de-engage slider");
                 telemetry.update();
                 robot.engageSlider(-2500);
+                slideback = false;
                 telemetry.addData("Moving Complete", "de-engage slider");
                 telemetry.update();
             }
