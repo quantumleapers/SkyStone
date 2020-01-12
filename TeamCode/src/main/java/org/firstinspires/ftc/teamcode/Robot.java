@@ -763,7 +763,7 @@ public class Robot  extends java.lang.Thread {
         //double power = -1;
 
         // phook.setPosition(0);
-        flap.setPosition(0.97);
+        flap.setPosition(-0.97);
         telemetry.addData("position ", flap.getPosition());
         telemetry.update();
 
@@ -779,7 +779,7 @@ public class Robot  extends java.lang.Thread {
         //double power = -1;
 
         // phook.setPosition(0);
-        flap.setPosition(-0.97);
+        flap.setPosition(0.97);
         telemetry.addData("position ", flap.getPosition());
         telemetry.update();
 
