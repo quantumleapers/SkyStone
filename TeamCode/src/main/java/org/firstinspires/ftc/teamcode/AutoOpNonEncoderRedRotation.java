@@ -33,7 +33,7 @@ public class AutoOpNonEncoderRedRotation extends LinearOpMode {
         } catch (Exception ex) {
 
         }
-        robot.moveFForRedFoundation(84, power);
+        robot.moveFForRedFoundation(90, power);
         robot.rotateAntiClockWise(55, 0.5);
         robot.engageHooks(-72);
       //  robot.moveF(55, 0.2);
@@ -45,8 +45,8 @@ public class AutoOpNonEncoderRedRotation extends LinearOpMode {
         }
         robot.moveR(72, power);
         robot.rotateClockWise(10, 0.5);
-        robot.moveF(60, 0.2);
-        robot.moveR(73, power);
+        robot.moveF(80, 0.2);
+        robot.moveR(70, power);
        // robot.moveB(36, power);
         //robot.moveR(45, 0.5);
         //robot.moveF(35, power);

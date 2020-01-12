@@ -4,6 +4,7 @@ import android.util.Log;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -27,7 +28,7 @@ public class Robot  extends java.lang.Thread {
 
     public HardwareMap hardwareMap;
     public Telemetry telemetry;
-    public boolean isTeleOp = true;
+    public boolean isTeleOp = false;
     public DcMotor Slide_R;
     public DcMotor Slide_L;
     public Servo phookLeft;
@@ -68,6 +69,10 @@ public class Robot  extends java.lang.Thread {
         telemetry.addData("Direction", "Rev motor right trigger");
         telemetry.update();
         if (isTeleOp == false) pause(250);
+    }
+
+    public void setTeleOp( boolean isTeleOp) {
+        this.isTeleOp = isTeleOp;
     }
 
     public void rotateClockWise(long degree, double power) {
@@ -955,6 +960,9 @@ public class Robot  extends java.lang.Thread {
         flap = hardwareMap.get(Servo.class, "p_flap");
         flap.resetDeviceConfigurationForOpMode();
         flap.setDirection(Servo.Direction.FORWARD);
+        if (!isTeleOp) {
+            flap.setPosition(1.0);
+        }
 
         //Initialize sensor
         digitalTouch = hardwareMap.get(DigitalChannel.class, "touch_sensor");

@@ -46,7 +46,7 @@ public class AutoOpNonEncoderBlueRotation extends LinearOpMode {
         robot.moveL(52, power);
         robot.rotateAntiClockWise(30, 0.5);
         robot.moveF(100, 0.2);
-        robot.moveL(72, power);
+        robot.moveL(78, power);
        // robot.moveB(36, power);
         //robot.moveR(45, 0.5);
         //robot.moveF(35, power);
