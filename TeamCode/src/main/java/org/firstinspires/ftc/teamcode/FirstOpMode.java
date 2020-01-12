@@ -15,8 +15,7 @@ import static java.lang.Boolean.TRUE;
 public class FirstOpMode extends LinearOpMode{
 
     private ElapsedTime runtime = new ElapsedTime();
-    static double power =  1;
-    boolean slideback = false;
+    static final double power =  1;
     private DcMotor MotorFl = null;
     private DcMotor MotorFr = null;
     private DcMotor MotorBl = null;
@@ -55,8 +54,8 @@ public class FirstOpMode extends LinearOpMode{
         while (opModeIsActive()) {
 
             // Setup a variable for each drive wheel to save power level for telemetry
-          //  double leftPower = 1.0;
-           // double rightPower = -1.0;
+            //  double leftPower = 1.0;
+            // double rightPower = -1.0;
 
             // Choose to drive using either Tank Mode, or POV Mode
             // Comment out the method that's not used.  The default below is POV.
@@ -65,8 +64,7 @@ public class FirstOpMode extends LinearOpMode{
             // - This uses basic math to combine motions and is easier to drive straight.
             //double drive = -gamepad1.left_stick_y;
             //double turn  =  gamepad1.right_stick_x;
-            //leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;pwd
-            
+            //leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
             //rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
 
             // Tank Mode uses one stick to control each wheel.
@@ -75,55 +73,21 @@ public class FirstOpMode extends LinearOpMode{
             // rightPower = -gamepad1.right_stick_y ;
 
             // Send calculated power to wheels
-           // MotorFl.setPower(leftPower);
+            // MotorFl.setPower(leftPower);
             //MotorFr.setPower(rightPower);
             //MotorBl.setPower(leftPower);
             //MotorBr.setPower(rightPower);
 
 
-            Robot robot = new Robot(hardwareMap, telemetry);
+            RobotTeleop robot = new RobotTeleop(hardwareMap, telemetry);
             robot.resetDcMotorsToUseNonEncode();
             robot.stopRobot();
-            robot.setTeleOp(true);
-           // gamepad1 = new Gamepad();
-
-            if(this.gamepad1.dpad_up){
-                telemetry.addData("Game pad 1Power", "100%");
-                telemetry.update();
-                power = 1;
-                telemetry.addData("Power Changed", "100%");
-                telemetry.update();
-
-            }
-            if(this.gamepad1.dpad_down){
-                telemetry.addData("Game pad 1Power", "10%");
-                telemetry.update();
-                power = 0.25;
-                telemetry.addData("Power Changed", "10%");
-                telemetry.update();
-
-            }
-            if(this.gamepad1.dpad_left){
-                telemetry.addData("Game pad 1Power", "25%");
-                telemetry.update();
-                power = 0.5;
-                telemetry.addData("Power Changed", "25%");
-                telemetry.update();
-
-            }
-            if(this.gamepad1.dpad_right){
-                telemetry.addData("Game pad 1Power", "50%");
-                telemetry.update();
-                power = 0.75;
-                telemetry.addData("Power Changed", "50%");
-                telemetry.update();
-
-            }
+            // gamepad1 = new Gamepad();
 
             if (this.gamepad1.right_stick_y > 0.5) {
                 telemetry.addData("Game pad 1Moving", "Backward");
                 telemetry.update();
-               // robot.moveRevMotor(1);
+                // robot.moveRevMotor(1);
                 while (this.gamepad1.right_stick_y >= 0.5) {
                     robot.moveB(power);
                 }
@@ -133,7 +97,7 @@ public class FirstOpMode extends LinearOpMode{
             }
 
 
-           // gamepad2 = new Gamepad();
+            // gamepad2 = new Gamepad();
             if (this.gamepad2.right_stick_y > 0.5) {
                 telemetry.addData("Moving", "Backward");
                 telemetry.update();
@@ -141,7 +105,7 @@ public class FirstOpMode extends LinearOpMode{
                     robot.moveB(power);
                 }
                 robot.stopRobot();
-               // robot.moveB(10, power);
+                // robot.moveB(10, power);
                 telemetry.addData("Moving Complete", "Backward");
                 telemetry.update();
             }
@@ -176,7 +140,7 @@ public class FirstOpMode extends LinearOpMode{
                     robot.moveR(power);
                 }
                 robot.stopRobot();
-               // robot.moveR(5, power);
+                // robot.moveR(5, power);
                 telemetry.addData("Moving Complete", "Right");
                 telemetry.update();
             }
@@ -200,7 +164,7 @@ public class FirstOpMode extends LinearOpMode{
                     robot.moveL(power);
                 }
                 robot.stopRobot();
-               // robot.moveL(5, power);
+                // robot.moveL(5, power);
                 telemetry.addData("Moving Complete", "Left");
                 telemetry.update();
             }
@@ -220,7 +184,7 @@ public class FirstOpMode extends LinearOpMode{
             if (this.gamepad1.left_stick_x < -0.5) {
                 telemetry.addData("Moving", "clockwise rotation");
                 telemetry.update();
-                robot.rotateClockWise(100, power);
+                robot.rotateClockWise( power);
                 telemetry.addData("Moving Complete", "clockwise rotation");
                 telemetry.update();
             }
@@ -228,7 +192,7 @@ public class FirstOpMode extends LinearOpMode{
             if (this.gamepad1.left_stick_x > 0.5) {
                 telemetry.addData("Moving", "anticlockwise rotation");
                 telemetry.update();
-                robot.rotateAntiClockWise(100, power);
+                robot.rotateAntiClockWise(power);
                 telemetry.addData("Moving Complete", "anticlockwise rotation");
                 telemetry.update();
             }
@@ -246,19 +210,17 @@ public class FirstOpMode extends LinearOpMode{
                 telemetry.addData("Moving Complete", "de-engage flap");
                 telemetry.update();
             }
-            if (this.gamepad1.right_bumper == TRUE && slideback == FALSE) {
+            if (this.gamepad1.right_bumper == TRUE) {
                 telemetry.addData("Moving", "engage slider");
                 telemetry.update();
                 robot.engageSlider(2500);
-                slideback = true;
                 telemetry.addData("Moving Complete", "engage slider");
                 telemetry.update();
             }
-            if (this.gamepad1.left_bumper == TRUE && slideback == TRUE) {
+            if (this.gamepad1.left_bumper == TRUE) {
                 telemetry.addData("Moving", "de-engage slider");
                 telemetry.update();
                 robot.engageSlider(-2500);
-                slideback = false;
                 telemetry.addData("Moving Complete", "de-engage slider");
                 telemetry.update();
             }
@@ -315,8 +277,8 @@ public class FirstOpMode extends LinearOpMode{
             }
 */
 
-           // robot.moveR(10);
-           // robot.moveB(10);
+            // robot.moveR(10);
+            // robot.moveB(10);
             //robot.moveL(10);
 
             // Show the elapsed game time and wheel power.
