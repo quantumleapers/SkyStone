@@ -218,7 +218,10 @@ public class FirstOpMode extends LinearOpMode{
             if (this.gamepad1.left_stick_x < -0.5) {
                 telemetry.addData("Moving", "clockwise rotation");
                 telemetry.update();
-                robot.rotateClockWise( power);
+               while(this.gamepad1.left_stick_x <= -0.5) {
+                   robot.rotateClockWise(power);
+               }
+               robot.stopRobot();
                 telemetry.addData("Moving Complete", "clockwise rotation");
                 telemetry.update();
             }
@@ -226,7 +229,10 @@ public class FirstOpMode extends LinearOpMode{
             if (this.gamepad1.left_stick_x > 0.5) {
                 telemetry.addData("Moving", "anticlockwise rotation");
                 telemetry.update();
-                robot.rotateAntiClockWise(power);
+                while(this.gamepad1.left_stick_x >= 0.5) {
+                    robot.rotateAntiClockWise(power);
+                }
+                robot.stopRobot();
                 telemetry.addData("Moving Complete", "anticlockwise rotation");
                 telemetry.update();
             }
