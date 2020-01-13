@@ -17,6 +17,7 @@ public class FirstOpMode extends LinearOpMode{
     private ElapsedTime runtime = new ElapsedTime();
     boolean slideback = true;
     boolean sliderEngaged = false;
+    boolean flapEngaged = false;
     static double power =  1;
     private DcMotor MotorFl = null;
     private DcMotor MotorFr = null;
@@ -245,6 +246,7 @@ public class FirstOpMode extends LinearOpMode{
                 telemetry.addData("Moving", "engage flap");
                 telemetry.update();
                 robot.engageFlap();
+                flapEngaged = true;
                 telemetry.addData("Moving Complete", "engage flap");
                 telemetry.update();
             }
@@ -253,6 +255,7 @@ public class FirstOpMode extends LinearOpMode{
                 telemetry.addData("Moving", "de-engage flap");
                 telemetry.update();
                 robot.disengageFlap();
+                flapEngaged = false;
                 telemetry.addData("Moving Complete", "de-engage flap");
                 telemetry.update();
             }
@@ -265,7 +268,7 @@ public class FirstOpMode extends LinearOpMode{
                 telemetry.addData("Moving Complete", "engage slider");
                 telemetry.update();
             }
-            if (this.gamepad1.left_bumper == TRUE && slideback == FALSE) {
+            if (this.gamepad1.left_bumper == TRUE && slideback == FALSE && flapEngaged == FALSE) {
                 telemetry.addData("Moving", "de-engage slider");
                 telemetry.update();
                 robot.engageSlider(-2500);
