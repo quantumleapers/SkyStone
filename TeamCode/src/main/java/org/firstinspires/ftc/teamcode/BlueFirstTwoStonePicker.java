@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 @Autonomous(name="BluSkyStonePicker", group="Linear Opmode")
-public class BlueSkyStonePicker extends LinearOpMode {
+public class BlueFirstTwoStonePicker extends LinearOpMode {
 
     private static final double power = 1;
     private ElapsedTime aRuntime = new ElapsedTime();
@@ -25,16 +25,27 @@ public class BlueSkyStonePicker extends LinearOpMode {
         robot.disengageFlap();
         robot.engageSlider(2500);
         robot.moveF(27, power);
-        robot.moveL(42, power);
+        robot.moveL(52, power);
         robot.moveF(28, power);
-        robot.moveF(28, .25);
+        robot.moveF(35, .25);
         robot.engageFlap();
         robot.moveB(10, power);
         robot.moveL(120, power);
         robot.disengageFlap();
+        //robot.engageSlider(-2500);
+
+        //robot.moveR(60, power);
+        robot.moveR(139, power);
+        robot.moveF(10, power);
+        robot.moveF(35, .25);
+        robot.engageFlap();
+        robot.moveB(10, power);
+        robot.moveL(132, power);
+        robot.disengageFlap();
         robot.engageSlider(-2500);
 
         robot.moveR(50, power);
+        robot.moveF(10, power);
 
         /*
         try {
