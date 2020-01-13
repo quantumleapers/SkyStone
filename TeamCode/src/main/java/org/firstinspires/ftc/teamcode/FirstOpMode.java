@@ -51,6 +51,11 @@ public class FirstOpMode extends LinearOpMode{
         waitForStart();
         runtime.reset();
 
+        RobotTeleop robot = new RobotTeleop(hardwareMap, telemetry);
+        robot.setTeleOp(true);
+        robot.resetDcMotorsToUseNonEncode();
+        robot.stopRobot();
+
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
@@ -81,9 +86,8 @@ public class FirstOpMode extends LinearOpMode{
 
 
             ;
-            robot.resetDcMotorsToUseNonEncode();
-            robot.stopRobot();
-            robot.setTeleOp(true);
+
+
             if(this.gamepad1.dpad_up){
                 telemetry.addData("Game pad 1Power", "100%");
                 telemetry.update();

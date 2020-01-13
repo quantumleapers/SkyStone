@@ -73,6 +73,8 @@ public class Robot  extends java.lang.Thread {
 
     public void setTeleOp( boolean isTeleOp) {
         this.isTeleOp = isTeleOp;
+        flap.resetDeviceConfigurationForOpMode();
+      //  flap.setPosition(1.0);
     }
 
     public void rotateClockWise(long degree, double power) {
@@ -960,9 +962,10 @@ public class Robot  extends java.lang.Thread {
         flap = hardwareMap.get(Servo.class, "p_flap");
         flap.resetDeviceConfigurationForOpMode();
         flap.setDirection(Servo.Direction.FORWARD);
-      //  if (!isTeleOp) {
-      //      flap.setPosition(1.0);
-      //  }
+        if (!isTeleOp) {
+            flap.setPosition(1.0);
+        }
+
 
         //Initialize sensor
         digitalTouch = hardwareMap.get(DigitalChannel.class, "touch_sensor");
