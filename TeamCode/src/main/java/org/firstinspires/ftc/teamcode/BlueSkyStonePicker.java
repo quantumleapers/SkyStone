@@ -24,12 +24,17 @@ public class BlueSkyStonePicker extends LinearOpMode {
         Robot robot = new Robot(hardwareMap, telemetry);
         robot.disengageFlap();
         robot.engageSlider(2500);
-        //robot.moveF(27, power);
-        robot.moveL(22, power);
-        robot.moveF(68, power);
+        robot.moveF(27, power);
+        robot.moveL(42, power);
+        robot.moveF(28, power);
+        robot.moveF(28, .25);
         robot.engageFlap();
-        robot.moveB(39, power);
-        robot.moveL(60, power);
+        robot.moveB(10, power);
+        robot.moveL(120, power);
+        robot.disengageFlap();
+        robot.engageSlider(-2500);
+
+        robot.moveR(50, power);
 
         /*
         try {
