@@ -772,7 +772,7 @@ public class Robot  extends java.lang.Thread {
         } catch (Exception ex) {
 
         }
-        telemetry.addData("servo moder ", "flap test");
+        telemetry.addData("servo moder ", "flap engageFlap");
         telemetry.update();
     }
     public void disengageFlap() {
@@ -788,7 +788,7 @@ public class Robot  extends java.lang.Thread {
         } catch (Exception ex) {
 
         }
-        telemetry.addData("servo moder ", "flap test");
+        telemetry.addData("servo moder ", "flap disengageFlap");
         telemetry.update();
     }
 
@@ -960,9 +960,9 @@ public class Robot  extends java.lang.Thread {
         flap = hardwareMap.get(Servo.class, "p_flap");
         flap.resetDeviceConfigurationForOpMode();
         flap.setDirection(Servo.Direction.FORWARD);
-        if (!isTeleOp) {
-            flap.setPosition(1.0);
-        }
+      //  if (!isTeleOp) {
+      //      flap.setPosition(1.0);
+      //  }
 
         //Initialize sensor
         digitalTouch = hardwareMap.get(DigitalChannel.class, "touch_sensor");

@@ -80,7 +80,7 @@ public class FirstOpMode extends LinearOpMode{
             //MotorBr.setPower(rightPower);
 
 
-            RobotTeleop robot = new RobotTeleop(hardwareMap, telemetry);
+            ;
             robot.resetDcMotorsToUseNonEncode();
             robot.stopRobot();
             robot.setTeleOp(true);
