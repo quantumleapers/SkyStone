@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="BlueFirstTwoStonePicker", group="Linear Opmode")
-public class BlueFirstTwoStonePicker extends LinearOpMode {
+@Autonomous(name="RedFirstTwoStonePicker", group="Linear Opmode")
+public class RedFirstTwoStonePicker extends LinearOpMode {
 
     private static final double power = 1;
     private ElapsedTime aRuntime = new ElapsedTime();
@@ -25,27 +25,29 @@ public class BlueFirstTwoStonePicker extends LinearOpMode {
         robot.disengageFlap();
         robot.engageSlider(2500);
         robot.moveF(27, power);
-        robot.moveL(52, power);
-        robot.moveF(28, power);
+        robot.moveR(23, power);
+        robot.moveF(26, power);
         robot.moveF(35, .25);
         robot.engageFlap();
-        robot.moveB(10, power);
-        robot.moveL(120, power);
+        robot.moveB(14, power);
+        robot.moveR(125, power);
         robot.disengageFlap();
         //robot.engageSlider(-2500);
 
         //robot.moveR(60, power);
-        robot.moveR(139, power);
-        robot.moveF(10, power);
+        robot.rotateAntiClockWise(10, 0.5);
+        robot.moveL(139, power);
+        robot.moveF(12, power);
         robot.moveF(35, .25);
         robot.engageFlap();
-        robot.moveB(10, power);
-        robot.moveL(132, power);
+        robot.rotateAntiClockWise(10, 0.5);
+        robot.moveB(14, power);
+        robot.moveR(151, power);
         robot.disengageFlap();
         robot.engageSlider(-2500);
 
-        robot.moveR(50, power);
-        robot.moveF(10, power);
+        robot.moveL(44, power);
+        robot.moveF(12, power);
 
         /*
         try {

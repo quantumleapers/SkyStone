@@ -5,6 +5,7 @@ import android.util.Log;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Gyroscope;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -18,6 +19,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+@Disabled
 
 @Autonomous(name="AutoOpRedNonEncoder", group="Linear Opmode")
 public class AutoOpNonEncoderRed extends LinearOpMode {

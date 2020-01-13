@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.util.Range;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
-@TeleOp(name="FirstOpMode257", group="Linear Opmode")
+@TeleOp(name="TeleOpQLeapers", group="Linear Opmode")
 public class FirstOpMode extends LinearOpMode{
 
     private ElapsedTime runtime = new ElapsedTime();
