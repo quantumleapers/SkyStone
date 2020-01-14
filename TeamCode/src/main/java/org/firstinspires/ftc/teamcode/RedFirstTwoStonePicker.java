@@ -26,28 +26,28 @@ public class RedFirstTwoStonePicker extends LinearOpMode {
         robot.engageSlider(2500);
         robot.moveF(27, power);
         robot.moveR(23, power);
-        robot.moveF(26, power);
-        robot.moveF(35, .25);
+        robot.moveF(32, power);
+        robot.moveF(40, .25);
         robot.engageFlap();
-        robot.moveB(14, power);
-        robot.moveR(125, power);
+        robot.moveB(20, power);
+        robot.moveR(138, power);
         robot.disengageFlap();
         //robot.engageSlider(-2500);
 
         //robot.moveR(60, power);
         robot.rotateAntiClockWise(10, 0.5);
-        robot.moveL(139, power);
-        robot.moveF(12, power);
+        robot.moveL(152, power);
+        robot.moveF(18, power);
         robot.moveF(35, .25);
         robot.engageFlap();
         robot.rotateAntiClockWise(10, 0.5);
-        robot.moveB(14, power);
-        robot.moveR(151, power);
+        robot.moveB(20, power);
+        robot.moveR(164, power);
         robot.disengageFlap();
         robot.engageSlider(-2500);
 
-        robot.moveL(44, power);
-        robot.moveF(12, power);
+        robot.moveL(54, power);
+        robot.moveF(18, power);
 
         /*
         try {
