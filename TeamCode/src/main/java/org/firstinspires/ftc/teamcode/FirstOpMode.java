@@ -87,9 +87,6 @@ public class FirstOpMode extends LinearOpMode{
             //MotorBr.setPower(rightPower);
 
 
-            ;
-
-
             if(this.gamepad1.dpad_up){
                 telemetry.addData("Game pad 1Power", "100%");
                 telemetry.update();
@@ -138,17 +135,6 @@ public class FirstOpMode extends LinearOpMode{
 
 
             // gamepad2 = new Gamepad();
-            if (this.gamepad2.right_stick_y > 0.5) {
-                telemetry.addData("Moving", "Backward");
-                telemetry.update();
-                while (this.gamepad2.right_stick_y >= 0.5) {
-                    robot.moveB(power);
-                }
-                robot.stopRobot();
-                // robot.moveB(10, power);
-                telemetry.addData("Moving Complete", "Backward");
-                telemetry.update();
-            }
 
             if (this.gamepad1.right_stick_y < -0.5) {
                 telemetry.addData("Moving", "Forward");
@@ -161,17 +147,6 @@ public class FirstOpMode extends LinearOpMode{
                 telemetry.update();
             }
 
-            if (this.gamepad2.right_stick_y < -0.5) {
-                telemetry.addData("Moving", "Forward");
-                telemetry.update();
-                while(this.gamepad2.right_stick_y <= -0.5) {
-                    robot.moveF(power);
-                }
-                robot.stopRobot();
-                //robot.moveF(10, power);
-                telemetry.addData("Moving Complete", "Backward");
-                telemetry.update();
-            }
 
             if (this.gamepad1.right_stick_x > 0.5) {
                 telemetry.addData("Moving", "Right");
@@ -185,17 +160,6 @@ public class FirstOpMode extends LinearOpMode{
                 telemetry.update();
             }
 
-            if (this.gamepad2.right_stick_x > 0.5) {
-                telemetry.addData("Moving", "Right");
-                telemetry.update();
-                while(this.gamepad2.right_stick_x >= 0.5) {
-                    robot.moveR(5, power);
-                }
-                robot.stopRobot();
-                //robot.moveR(5, power);
-                telemetry.addData("Moving Complete", "Right");
-                telemetry.update();
-            }
 
             if (this.gamepad1.right_stick_x < -0.5) {
                 telemetry.addData("Moving", "Left");
@@ -209,17 +173,6 @@ public class FirstOpMode extends LinearOpMode{
                 telemetry.update();
             }
 
-            if (this.gamepad2.right_stick_x < -0.5) {
-                telemetry.addData("Moving", "Left");
-                telemetry.update();
-                while(this.gamepad2.right_stick_x <= -0.5) {
-                    robot.moveL(power);
-                }
-                robot.stopRobot();
-                //robot.moveL(5, power);
-                telemetry.addData("Moving Complete", "Left");
-                telemetry.update();
-            }
 
             if (this.gamepad1.left_stick_x < -0.5) {
                 telemetry.addData("Moving", "clockwise rotation");
@@ -291,48 +244,161 @@ public class FirstOpMode extends LinearOpMode{
                 telemetry.addData("Moving Complete", "disengage  phooks");
                 telemetry.update();
             }
-/*
-            robot.moveF(1);
-            try {
-                Thread.sleep(10000);
-            } catch (Exception ex) {
-                telemetry.addData("SLEEP", "Run Time: " + runtime.toString());
+
+            //GAMEPAD 2
+
+            if(this.gamepad2.dpad_up){
+                telemetry.addData("Game pad 2Power", "100%");
+                telemetry.update();
+                power = 1;
+                telemetry.addData("Power Changed", "100%");
                 telemetry.update();
 
-               // break;
             }
-            robot.moveR(1);
-            try {
-                Thread.sleep(10000);
-            } catch (Exception ex) {
-                telemetry.addData("SLEEP R", "Run Time: " + runtime.toString());
+            if(this.gamepad2.dpad_down){
+                telemetry.addData("Game pad 2Power", "10%");
+                telemetry.update();
+                power = 0.25;
+                telemetry.addData("Power Changed", "10%");
                 telemetry.update();
 
-                // break;
             }
-            robot.moveB(1);
-            try {
-                Thread.sleep(10000);
-            } catch (Exception ex) {
-                telemetry.addData("SLEEP B", "Run Time: " + runtime.toString());
+            if(this.gamepad2.dpad_left){
+                telemetry.addData("Game pad 2Power", "25%");
+                telemetry.update();
+                power = 0.5;
+                telemetry.addData("Power Changed", "25%");
                 telemetry.update();
 
-                // break;
             }
-            robot.moveL(1);
-            try {
-                Thread.sleep(10000);
-            } catch (Exception ex) {
-                telemetry.addData("SLEEP L", "Run Time: " + runtime.toString());
+            if(this.gamepad2.dpad_right){
+                telemetry.addData("Game pad 2Power", "50%");
+                telemetry.update();
+                power = 0.75;
+                telemetry.addData("Power Changed", "50%");
                 telemetry.update();
 
-                // break;
             }
-*/
 
-            // robot.moveR(10);
-            // robot.moveB(10);
-            //robot.moveL(10);
+            if (this.gamepad2.right_stick_y > 0.5) {
+                telemetry.addData("Game pad 2Moving", "Backward");
+                telemetry.update();
+                // robot.moveRevMotor(1);
+                while (this.gamepad2.right_stick_y >= 0.5) {
+                    robot.moveB(power);
+                }
+                robot.stopRobot();
+                telemetry.addData("Moving Complete", "Backward");
+                telemetry.update();
+            }
+
+
+            if (this.gamepad2.right_stick_y < -0.5) {
+                telemetry.addData("Moving", "Forward");
+                telemetry.update();
+                while (this.gamepad2.right_stick_y <= -0.5) {
+                    robot.moveF(power);
+                }
+                robot.stopRobot();
+                telemetry.addData("Moving Complete", "Backward");
+                telemetry.update();
+            }
+
+
+            if (this.gamepad2.right_stick_x > 0.5) {
+                telemetry.addData("Moving", "Right");
+                telemetry.update();
+                while(this.gamepad2.right_stick_x >= 0.5) {
+                    robot.moveR(power);
+                }
+                robot.stopRobot();
+                telemetry.addData("Moving Complete", "Right");
+                telemetry.update();
+            }
+
+
+            if (this.gamepad2.right_stick_x < -0.5) {
+                telemetry.addData("Moving", "Left");
+                telemetry.update();
+                while(this.gamepad2.right_stick_x <= -0.5) {
+                    robot.moveL(power);
+                }
+                robot.stopRobot();
+                telemetry.addData("Moving Complete", "Left");
+                telemetry.update();
+            }
+
+
+            if (this.gamepad2.left_stick_x < -0.5) {
+                telemetry.addData("Moving", "clockwise rotation");
+                telemetry.update();
+                while(this.gamepad2.left_stick_x <= -0.5) {
+                    robot.rotateClockWise(power);
+                }
+                robot.stopRobot();
+                telemetry.addData("Moving Complete", "clockwise rotation");
+                telemetry.update();
+            }
+
+            if (this.gamepad2.left_stick_x > 0.5) {
+                telemetry.addData("Moving", "anticlockwise rotation");
+                telemetry.update();
+                while(this.gamepad2.left_stick_x >= 0.5) {
+                    robot.rotateAntiClockWise(power);
+                }
+                robot.stopRobot();
+                telemetry.addData("Moving Complete", "anticlockwise rotation");
+                telemetry.update();
+            }
+            if (this.gamepad2.right_trigger > 0.1 && sliderEngaged == TRUE) {
+                telemetry.addData("Moving", "engage flap");
+                telemetry.update();
+                robot.engageFlap();
+                flapEngaged = true;
+                telemetry.addData("Moving Complete", "engage flap");
+                telemetry.update();
+            }
+
+            if (this.gamepad2.left_trigger> 0.1) {
+                telemetry.addData("Moving", "de-engage flap");
+                telemetry.update();
+                robot.disengageFlap();
+                flapEngaged = false;
+                telemetry.addData("Moving Complete", "de-engage flap");
+                telemetry.update();
+            }
+            if (this.gamepad2.right_bumper == TRUE && slideback == TRUE) {
+                telemetry.addData("Moving", "engage slider");
+                telemetry.update();
+                robot.engageSlider(2500);
+                slideback = false;
+                sliderEngaged = true;
+                telemetry.addData("Moving Complete", "engage slider");
+                telemetry.update();
+            }
+            if (this.gamepad2.left_bumper == TRUE && slideback == FALSE && flapEngaged == FALSE) {
+                telemetry.addData("Moving", "de-engage slider");
+                telemetry.update();
+                robot.engageSlider(-2500);
+                slideback = true;
+                sliderEngaged = false;
+                telemetry.addData("Moving Complete", "de-engage slider");
+                telemetry.update();
+            }
+            if (this.gamepad2.x == TRUE) {
+                telemetry.addData("Moving", "engage  phooks");
+                telemetry.update();
+                robot.engageHooks(72);
+                telemetry.addData("Moving Complete", "engage  phooks");
+                telemetry.update();
+            }
+            if (this.gamepad2.b == TRUE) {
+                telemetry.addData("Moving", "disengage  phooks");
+                telemetry.update();
+                robot.engageHooks(-72);
+                telemetry.addData("Moving Complete", "disengage  phooks");
+                telemetry.update();
+            }
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status3", "Run Time: " + runtime.toString());
