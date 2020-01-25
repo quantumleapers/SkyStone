@@ -802,6 +802,24 @@ public class Robot extends java.lang.Thread {
         telemetry.update();
     }
 
+    public void resetCapstone() {
+        //double power = -1;
+
+        // phook.setPosition(0);
+
+        capPick.setPosition(1.0);
+        telemetry.addData("position ", capPick.getPosition());
+        telemetry.update();
+
+        try {
+            Thread.sleep(500);
+        } catch (Exception ex) {
+
+        }
+        telemetry.addData("servo moder ", "reset capPick");
+        telemetry.update();
+    }
+
     public void engageCapstone() {
         //double power = -1;
 

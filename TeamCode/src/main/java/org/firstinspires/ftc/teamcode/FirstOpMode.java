@@ -195,6 +195,13 @@ public class FirstOpMode extends LinearOpMode{
                 telemetry.addData("Moving Complete", "anticlockwise rotation");
                 telemetry.update();
             }
+
+            if (this.gamepad1.right_stick_button) {
+                telemetry.addData("Right stick button", "reset capstone pick");
+                telemetry.update();
+                robot.resetCapstone();
+            }
+
             if (this.gamepad1.right_trigger > 0.1 && sliderEngaged == TRUE) {
                 telemetry.addData("Moving", "engage flap");
                 telemetry.update();
