@@ -801,13 +801,14 @@ public class Robot extends java.lang.Thread {
         telemetry.addData("servo moder ", "flap disengageFlap");
         telemetry.update();
     }
+    
 
     public void resetCapstone() {
         //double power = -1;
 
         // phook.setPosition(0);
 
-        capPick.setPosition(1.0);
+        capPick.setPosition(0.92);
         telemetry.addData("position ", capPick.getPosition());
         telemetry.update();
 
@@ -1012,7 +1013,7 @@ public class Robot extends java.lang.Thread {
         telemetry.addData("SkyStone using HSS value",hssValues[2]);
 
 
-        if (hssValues[0] < 60) {
+        if (hssValues[0] < 40 ) {
             telemetry.addData("SkyStone using HSS value", "true");
             return true;
         }
