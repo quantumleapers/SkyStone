@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="BlueFirstTwoStonePicker", group="Linear Opmode")
-public class BlueFirstTwoStonePicker extends LinearOpMode {
+@Autonomous(name="BlueStoneColorSensorPicker", group="Linear Opmode")
+public class BlueStoneColorSensorPicker extends LinearOpMode {
 
     private static final double power = 1;
     private ElapsedTime aRuntime = new ElapsedTime();
@@ -22,11 +22,26 @@ public class BlueFirstTwoStonePicker extends LinearOpMode {
         waitForStart();
         aRuntime.reset();
         Robot robot = new Robot(hardwareMap, telemetry);
+        /*
+        if (true) {
+            robot.enableLight();
+            telemetry.addData("Starting Autonomous", robot.detectSkyStone());
+            telemetry.update();
+            sleep(5000);
+
+            robot.disableLight();
+            return;
+        }*/
         robot.disengageFlap();
         robot.engageSlider(2500);
         robot.moveF(27, power);
         robot.moveL(52, power);
         robot.moveF(28, power);
+        sleep(5000);
+        robot.enableLight();
+        telemetry.addData("Starting Autonomous", robot.detectSkyStone());
+
+        robot.disableLight();
         robot.moveF(40, .25);
         robot.engageFlap();
         robot.moveB(15, power);

@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Gyroscope;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.SwitchableLight;
@@ -47,7 +48,8 @@ public class Robot extends java.lang.Thread {
     public  long movementFactor = 20;
 
     DigitalChannel digitalTouch;
-    NormalizedColorSensor colorSensor;
+    NormalizedColorSensor ncolorSensor;
+    ColorSensor colorSensor;
 
     Robot(HardwareMap map, Telemetry tel) {
         hardwareMap = map;
@@ -804,7 +806,8 @@ public class Robot extends java.lang.Thread {
         //double power = -1;
 
         // phook.setPosition(0);
-        capPick.setPosition(-0.97);
+
+        capPick.setPosition(0.80);
         telemetry.addData("position ", capPick.getPosition());
         telemetry.update();
 
@@ -821,7 +824,7 @@ public class Robot extends java.lang.Thread {
         //double power = -1;
 
         // phook.setPosition(0);
-        capPick.setPosition(0.97);
+        capPick.setPosition(0.3);
         telemetry.addData("position ", capPick.getPosition());
         telemetry.update();
 
@@ -953,12 +956,30 @@ public class Robot extends java.lang.Thread {
         }
     }
 
-    public boolean detectSkyStone() {
-        if (colorSensor instanceof SwitchableLight) {
-            SwitchableLight light = (SwitchableLight)colorSensor;
-            light.enableLight(true);
+    public boolean detectNewSkyStone() throws InterruptedException {
+
+
+        telemetry.addData("Detected red", colorSensor.red());
+        telemetry.addData("Detected alpha", colorSensor.alpha());
+        telemetry.addData("Detected blue", colorSensor.blue());
+        telemetry.addData("Detected green", colorSensor.green());
+        telemetry.update();
+
+        if (colorSensor.red() >= 10 && colorSensor.red() <= 18) {
+            return true;
         }
-        NormalizedRGBA colors = colorSensor.getNormalizedColors();
+        return false;
+
+    }
+
+    public boolean detectSkyStone() throws InterruptedException {
+
+        NormalizedRGBA colors = ncolorSensor.getNormalizedColors();
+        sleep(100);
+        telemetry.addData("Detected color", colors.toColor());
+
+        telemetry.update();
+        sleep(2000);
 
         // Try this first
         if (colors.toColor() == Color.BLACK) {
@@ -977,22 +998,32 @@ public class Robot extends java.lang.Thread {
             telemetry.addData("SkyStone using HSS value", "true");
             return true;
         }
+        telemetry.update();
+
+
 
         return false;
     }
 
     public void enableLight() {
-        if (colorSensor instanceof SwitchableLight) {
+
+        telemetry.addData("Enable light", "enable light");
+        //telemetry.update();
+        if (ncolorSensor instanceof SwitchableLight) {
+            telemetry.addData("Switchable light", "true");
+            //telemetry.update();
             SwitchableLight light = (SwitchableLight)colorSensor;
             light.enableLight(true);
         }
+       // ncolorSensor.resetDeviceConfigurationForOpMode();
     }
 
     public void disableLight() {
-        if (colorSensor instanceof SwitchableLight) {
+        if (ncolorSensor instanceof SwitchableLight) {
             SwitchableLight light = (SwitchableLight)colorSensor;
             light.enableLight(false);
         }
+       // ncolorSensor.resetDeviceConfigurationForOpMode();
     }
 /*
     public void moveHook90(long distance) {
@@ -1059,8 +1090,8 @@ public class Robot extends java.lang.Thread {
         digitalTouch.setState(false);
 
         //Initialize Color sensor
-        colorSensor = hardwareMap.get(NormalizedColorSensor.class, "color_sensor");
-        colorSensor.resetDeviceConfigurationForOpMode();
+        ncolorSensor = hardwareMap.get(NormalizedColorSensor.class, "color_sensor");
+        ncolorSensor.resetDeviceConfigurationForOpMode();
 
         //phook.s
  //       flap.setPosition(0.45);
