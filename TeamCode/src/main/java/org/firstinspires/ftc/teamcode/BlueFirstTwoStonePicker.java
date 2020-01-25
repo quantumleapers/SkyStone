@@ -28,6 +28,12 @@ public class BlueFirstTwoStonePicker extends LinearOpMode {
         robot.moveL(52, power);
         robot.moveF(28, power);
         robot.moveF(40, .25);
+      //  robot.detectSkyStone();
+
+        telemetry.addData("Skystone", robot.detectSkyStone());
+        telemetry.update();
+        sleep(2000);
+
         robot.engageFlap();
         robot.moveB(15, power);
         robot.moveL(132, power);

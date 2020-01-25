@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import android.util.Log;
+import android.graphics.Color;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -9,7 +10,10 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Gyroscope;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
+import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.SwitchableLight;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -33,6 +37,7 @@ public class Robot  extends java.lang.Thread {
     public DcMotor Slide_L;
     public Servo phookLeft;
     public Servo flap;
+    public Servo capPick;
     public Servo phookRight;
     public int EncoderTicks = 1440;
     public float WheelDiameter = (float)3.86;
@@ -42,6 +47,7 @@ public class Robot  extends java.lang.Thread {
     public  long movementFactor = 20;
 
     DigitalChannel digitalTouch;
+    NormalizedColorSensor colorSensor;
 
     Robot(HardwareMap map, Telemetry tel) {
         hardwareMap = map;
@@ -794,6 +800,40 @@ public class Robot  extends java.lang.Thread {
         telemetry.update();
     }
 
+    public void engageCapstone() {
+        //double power = -1;
+
+        // phook.setPosition(0);
+        capPick.setPosition(-0.97);
+        telemetry.addData("position ", capPick.getPosition());
+        telemetry.update();
+
+        try {
+            Thread.sleep(500);
+        } catch (Exception ex) {
+
+        }
+        telemetry.addData("servo moder ", "capPick engageCapstone");
+        telemetry.update();
+    }
+
+    public void disengageCapstone() {
+        //double power = -1;
+
+        // phook.setPosition(0);
+        capPick.setPosition(0.97);
+        telemetry.addData("position ", capPick.getPosition());
+        telemetry.update();
+
+        try {
+            Thread.sleep(500);
+        } catch (Exception ex) {
+
+        }
+        telemetry.addData("servo moder ", "capPick disengageCapstone");
+        telemetry.update();
+    }
+
    public void resetDcMotorsToUseNonEncode()
     {
         Motor_FL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -912,6 +952,48 @@ public class Robot  extends java.lang.Thread {
             }
         }
     }
+
+    public boolean detectSkyStone() {
+        if (colorSensor instanceof SwitchableLight) {
+            SwitchableLight light = (SwitchableLight)colorSensor;
+            light.enableLight(true);
+        }
+        NormalizedRGBA colors = colorSensor.getNormalizedColors();
+
+        // Try this first
+        if (colors.toColor() == Color.BLACK) {
+            telemetry.addData("SkyStone", "true");
+            return true;
+        }
+        // If above does not work, use HSS values
+        float[] hssValues = new float[3];
+        Color.colorToHSV(colors.toColor(), hssValues);
+        telemetry.addData("SkyStone using HSS value",hssValues[0]);
+        telemetry.addData("SkyStone using HSS value",hssValues[1]);
+        telemetry.addData("SkyStone using HSS value",hssValues[2]);
+
+
+        if (hssValues[0] < 60) {
+            telemetry.addData("SkyStone using HSS value", "true");
+            return true;
+        }
+
+        return false;
+    }
+
+    public void enableLight() {
+        if (colorSensor instanceof SwitchableLight) {
+            SwitchableLight light = (SwitchableLight)colorSensor;
+            light.enableLight(true);
+        }
+    }
+
+    public void disableLight() {
+        if (colorSensor instanceof SwitchableLight) {
+            SwitchableLight light = (SwitchableLight)colorSensor;
+            light.enableLight(false);
+        }
+    }
 /*
     public void moveHook90(long distance) {
         double power = 1;
@@ -965,12 +1047,20 @@ public class Robot  extends java.lang.Thread {
         if (!isTeleOp) {
             flap.setPosition(1.0);
         }
-
-
+        capPick = hardwareMap.get(Servo.class, "launch_capstone");
+        capPick.resetDeviceConfigurationForOpMode();
+        capPick.setDirection(Servo.Direction.FORWARD);
+        if (isTeleOp) {
+            capPick.setPosition(1.0);
+        }
         //Initialize sensor
         digitalTouch = hardwareMap.get(DigitalChannel.class, "touch_sensor");
         digitalTouch.setMode(DigitalChannel.Mode.INPUT);
         digitalTouch.setState(false);
+
+        //Initialize Color sensor
+        colorSensor = hardwareMap.get(NormalizedColorSensor.class, "color_sensor");
+        colorSensor.resetDeviceConfigurationForOpMode();
 
         //phook.s
  //       flap.setPosition(0.45);

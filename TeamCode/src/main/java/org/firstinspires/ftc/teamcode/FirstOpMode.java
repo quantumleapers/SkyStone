@@ -244,6 +244,20 @@ public class FirstOpMode extends LinearOpMode{
                 telemetry.addData("Moving Complete", "disengage  phooks");
                 telemetry.update();
             }
+            if (this.gamepad1.a == TRUE) {
+                telemetry.addData("Moving", "engage  capstone");
+                telemetry.update();
+                robot.engageCapstone();
+                telemetry.addData("Moving Complete", "engage  capstone");
+                telemetry.update();
+            }
+            if (this.gamepad1.y == TRUE) {
+                telemetry.addData("Moving", "engage  capstone");
+                telemetry.update();
+                robot.disengageCapstone();
+                telemetry.addData("Moving Complete", "disengage capstone");
+                telemetry.update();
+            }
 
             //GAMEPAD 2
 
