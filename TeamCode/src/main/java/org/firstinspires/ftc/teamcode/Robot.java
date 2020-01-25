@@ -19,7 +19,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-public class Robot  extends java.lang.Thread {
+public class Robot extends java.lang.Thread {
 
     public DcMotor Motor_FL;
     public DcMotor Motor_FR;
