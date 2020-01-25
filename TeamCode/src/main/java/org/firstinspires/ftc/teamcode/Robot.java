@@ -981,12 +981,12 @@ public class Robot extends java.lang.Thread {
         telemetry.update();
         sleep(2000);
 
-        // Try this first
+        // Try this first(if)
         if (colors.toColor() == Color.BLACK) {
             telemetry.addData("SkyStone", "true");
             return true;
         }
-        // If above does not work, use HSS values
+        // If above does not work, use HSS values(else)
         float[] hssValues = new float[3];
         Color.colorToHSV(colors.toColor(), hssValues);
         telemetry.addData("SkyStone using HSS value",hssValues[0]);
