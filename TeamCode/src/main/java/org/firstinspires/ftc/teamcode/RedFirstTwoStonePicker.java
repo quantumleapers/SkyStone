@@ -36,15 +36,21 @@ public class RedFirstTwoStonePicker extends LinearOpMode {
 
         //robot.moveR(60, power);
         robot.rotateAntiClockWise(10, 0.5);
+        // added additional move back to not hit the bridge stand - 1/25
+        robot.moveB(4, power);
         robot.moveL(152, power);
-        robot.moveF(18, power);
+        // changing move forward from 18 to 21 to account for the above additional move back - 1/25
+        robot.moveF(22, power);
         robot.moveF(35, .25);
         robot.engageFlap();
         robot.rotateAntiClockWise(10, 0.5);
         robot.moveB(20, power);
-        robot.moveR(164, power);
+        // reducing amount going back from 164 to 162 to not use space of alliance robot 1/25
+        robot.moveR(162, power);
         robot.disengageFlap();
         robot.engageSlider(-2500);
+        // added additional rotate to make it straighter 1/25
+        robot.rotateAntiClockWise(6, 0.5);
 
         robot.moveL(54, power);
         robot.moveF(18, power);
