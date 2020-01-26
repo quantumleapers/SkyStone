@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="AutoOpBlueNonEncoderRotation", group="Linear Opmode")
+@Autonomous(name="BlueFoundation", group="Linear Opmode")
 public class AutoOpNonEncoderBlueRotation extends LinearOpMode {
 
     private static final double power = 1;
@@ -35,7 +35,7 @@ public class AutoOpNonEncoderBlueRotation extends LinearOpMode {
         }
         robot.moveF(80, power);
         robot.rotateClockWise(30, 0.5);
-        robot.engageHooks(-72);
+        robot.disEngageBlueHooks(-72);
       //  robot.moveF(55, 0.2);
 
         try {

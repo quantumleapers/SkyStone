@@ -944,6 +944,88 @@ public class Robot extends java.lang.Thread {
 
     }
 
+    public void disEngageBlueHooks (int ticks) {
+
+        telemetry.addData( "Back right hook", BR_Hook.getCurrentPosition());
+        telemetry.update();
+
+
+
+        try {
+            // sleep(distance * movementFactor);
+            BR_Hook.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            BR_Hook.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            BR_Hook.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            BR_Hook.setTargetPosition(ticks);
+            BR_Hook.setPower(1); //FL
+
+            BL_Hook.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            BL_Hook.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            BL_Hook.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            BL_Hook.setTargetPosition(ticks + 11);
+            BL_Hook.setPower(1); //FL
+
+            telemetry.addData("Back right hook target position after run", BR_Hook.getCurrentPosition());
+            telemetry.addData("Back left hook target position after run", BL_Hook.getCurrentPosition());
+            telemetry.update();
+
+
+            while(BL_Hook.isBusy() || BR_Hook.isBusy()){
+
+
+            }
+        } catch (Exception e) {
+        }
+
+
+        BL_Hook.setPower(0);
+        BR_Hook.setPower(0);
+        telemetry.addData("Back hooks engaged", BL_Hook.getPower());
+        telemetry.update();
+
+    }
+
+    public void disEngageRedHooks(int ticks) {
+
+        telemetry.addData( "Back right hook", BR_Hook.getCurrentPosition());
+        telemetry.update();
+
+
+
+        try {
+            // sleep(distance * movementFactor);
+            BR_Hook.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            BR_Hook.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            BR_Hook.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            BR_Hook.setTargetPosition(ticks + 11);
+            BR_Hook.setPower(1); //FL
+
+            BL_Hook.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            BL_Hook.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            BL_Hook.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            BL_Hook.setTargetPosition(ticks);
+            BL_Hook.setPower(1); //FL
+
+            telemetry.addData("Back right hook target position after run", BR_Hook.getCurrentPosition());
+            telemetry.addData("Back left hook target position after run", BL_Hook.getCurrentPosition());
+            telemetry.update();
+
+
+            while(BL_Hook.isBusy() || BR_Hook.isBusy()){
+
+
+            }
+        } catch (Exception e) {
+        }
+
+
+        BL_Hook.setPower(0);
+        BR_Hook.setPower(0);
+        telemetry.addData("Back hooks engaged", BL_Hook.getPower());
+        telemetry.update();
+
+    }
+
     public void moveDown() {
 
     }
@@ -1009,8 +1091,11 @@ public class Robot extends java.lang.Thread {
         float[] hssValues = new float[3];
         Color.colorToHSV(colors.toColor(), hssValues);
         telemetry.addData("SkyStone using HSS value",hssValues[0]);
-        telemetry.addData("SkyStone using HSS value",hssValues[1]);
-        telemetry.addData("SkyStone using HSS value",hssValues[2]);
+        telemetry.update();
+        //telemetry.addData("SkyStone using HSS value",hssValues[1]);
+        //telemetry.update();
+       // telemetry.addData("SkyStone using HSS value",hssValues[2]);
+       // telemetry.update();
 
 
         if (hssValues[0] < 40 ) {

@@ -22,7 +22,7 @@ public class BlueStoneColorSensorPicker extends LinearOpMode {
         waitForStart();
         aRuntime.reset();
         Robot robot = new Robot(hardwareMap, telemetry);
-        /*
+
         if (true) {
             robot.enableLight();
             telemetry.addData("Starting Autonomous", robot.detectSkyStone());
@@ -31,7 +31,7 @@ public class BlueStoneColorSensorPicker extends LinearOpMode {
 
             robot.disableLight();
             return;
-        }*/
+        }
         robot.disengageFlap();
         robot.engageSlider(2500);
         robot.moveF(27, power);
