@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="BlueStoneColorSensorPicker", group="Linear Opmode")
+@Autonomous(name="BlueSensorPicker", group="Linear Opmode")
 public class BlueStoneColorSensorPicker extends LinearOpMode {
 
     private static final double power = 1;
@@ -22,7 +22,7 @@ public class BlueStoneColorSensorPicker extends LinearOpMode {
         waitForStart();
         aRuntime.reset();
         Robot robot = new Robot(hardwareMap, telemetry);
-
+/*
         if (true) {
             robot.enableLight();
             telemetry.addData("Starting Autonomous", robot.detectSkyStone());
@@ -32,109 +32,59 @@ public class BlueStoneColorSensorPicker extends LinearOpMode {
             robot.disableLight();
             return;
         }
+ */
         robot.disengageFlap();
         robot.engageSlider(2500);
         robot.moveF(27, power);
         robot.moveL(52, power);
-        robot.moveF(28, power);
-        sleep(5000);
-        robot.enableLight();
-        telemetry.addData("Starting Autonomous", robot.detectSkyStone());
+        //robot.moveF(28, power);
+        robot.moveF(33, power);
+        if (robot.detectSkyStone()) {
+            robot.moveF(40, .25);
+            robot.engageFlap();
+          //  robot.moveB(15, power);
+            robot.moveB(20, power);
+            robot.moveL(132, power);
+            robot.disengageFlap();
 
-        robot.disableLight();
+            robot.moveR(147, power);
+           // robot.moveF(14, power);
+            robot.moveF(19, power);
+        }
+        robot.moveR(20, power);
+        if (robot.detectSkyStone()) {
+            robot.moveF(40, .25);
+            robot.engageFlap();
+            robot.moveB(20, power); //15
+            robot.moveL(152, power);
+            robot.disengageFlap();
+
+            robot.moveR(168, power);
+            robot.moveF(19, power); //14
+        }
+        robot.moveR(20, power);
         robot.moveF(40, .25);
         robot.engageFlap();
         robot.moveB(15, power);
-        robot.moveL(132, power);
+        robot.moveL(172, power);
         robot.disengageFlap();
-        //robot.engageSlider(-2500);
 
-        //robot.moveR(60, power);
-        robot.moveR(147, power);
+        /*
+        robot.moveR(183, power);
         robot.moveF(14, power);
         robot.moveF(35, .25);
         robot.engageFlap();
         robot.moveB(14, power);
         robot.moveL(144, power);
         robot.disengageFlap();
+         */
+
+
         robot.engageSlider(-2500);
 
         robot.moveR(50, power);
         robot.moveF(12, power);
 
-        /*
-        try {
-            Thread.sleep(500);
-        } catch (Exception ex) {
-
-        }
-        robot.moveF(82, power);
-        robot.rotateClockWise(30, 0.5);
-        robot.engageHooks(-72);
-        //  robot.moveF(55, 0.2);
-
-        try {
-            Thread.sleep(500);
-        } catch (Exception ex) {
-
-        }
-        robot.moveL(52, power);
-        robot.rotateAntiClockWise(30, 0.5);
-        robot.moveF(100, 0.2);
-        robot.moveL(78, power);
-        // robot.moveB(36, power);
-        //robot.moveR(45, 0.5);
-        //robot.moveF(35, power);
-        //robot.moveF(50, 0.2);
-        //robot.moveL(80, power);
-        robot.moveF(100, 0.2);
-        //  robot.moveB(4, power);
-        // robot.moveL(50, power);
-
-
-/*
-        robot.engageSlider(2500);
-        try {
-            Thread.sleep(5000);
-        } catch (Exception ex) {
-
-        }
-
-        robot.moveFlap();
-
- */
-
-
-        //  robot.moveFEnc(30);
-        //robot.moveLEnc(30);
-
-/*
-        robot.moveRightHookToLatch();
-        robot.moveLeftHookToLatch();
-        robot.moveBackward(30);
-        robot.moveRightHookToRelease();
-        robot.moveLeftHookToRelease();
-
- */
-        // robot.moveFlap();
-/*
-        try p
-            Thread.sleep(2000);
-
-        } catch (Exception ex) {
-            telemetry.addData("sleep", "sleep");
-            telemetry.update();
-        }*/
-        // robot.moveFEnc(60);
-        //robot.moveHook90l();
-        // robot.moveREnc(30);
-
-
-        // telemetry.addData("SLEEP", "Autonomous Run Time: " + aRuntime.toString());
-        // telemetry.update();
-
-
-        //robot.moveF(10);
 
     }
 }

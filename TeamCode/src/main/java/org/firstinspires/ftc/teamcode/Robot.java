@@ -1075,37 +1075,29 @@ public class Robot extends java.lang.Thread {
 
     public boolean detectSkyStone() throws InterruptedException {
 
-        NormalizedRGBA colors = ncolorSensor.getNormalizedColors();
-        sleep(100);
-        telemetry.addData("Detected color", colors.toColor());
+        int i = 0;
+        NormalizedRGBA colors = null;
+        while (i < 15) {
+             colors = ncolorSensor.getNormalizedColors();
+             //sleep(100);
+            telemetry.addData("Detected color:", colors.toColor());
 
-        telemetry.update();
-        sleep(2000);
-
-        // Try this first(if)
-        if (colors.toColor() == Color.BLACK) {
-            telemetry.addData("SkyStone", "true");
-            return true;
+            ncolorSensor.resetDeviceConfigurationForOpMode();
+            i++;
         }
-        // If above does not work, use HSS values(else)
         float[] hssValues = new float[3];
         Color.colorToHSV(colors.toColor(), hssValues);
         telemetry.addData("SkyStone using HSS value",hssValues[0]);
-        telemetry.update();
-        //telemetry.addData("SkyStone using HSS value",hssValues[1]);
-        //telemetry.update();
-       // telemetry.addData("SkyStone using HSS value",hssValues[2]);
-       // telemetry.update();
 
-
-        if (hssValues[0] < 40 ) {
-            telemetry.addData("SkyStone using HSS value", "true");
+        if (hssValues[0] == 120 ) {
+            telemetry.addData("SkyStone Detected", "true");
+            telemetry.update();
+           // sleep(10000);
             return true;
         }
+        telemetry.addData("SkyStone Detected", "false");
         telemetry.update();
-
-
-
+       // sleep(10000);
         return false;
     }
 
