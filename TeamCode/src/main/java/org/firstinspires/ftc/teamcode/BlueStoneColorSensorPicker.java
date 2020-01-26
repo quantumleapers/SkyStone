@@ -47,28 +47,49 @@ public class BlueStoneColorSensorPicker extends LinearOpMode {
             robot.moveL(132, power);
             robot.disengageFlap();
 
-            robot.moveR(147, power);
-           // robot.moveF(14, power);
-            robot.moveF(19, power);
-        }
-        robot.moveR(20, power);
-        if (robot.detectSkyStone()) {
+            //robot.moveR(147, power);
+            robot.moveR(218, power); /* move to 4th stone */
+            // robot.moveF(14, power);
+            robot.moveF(15, power);
             robot.moveF(40, .25);
             robot.engageFlap();
-            robot.moveB(20, power); //15
-            robot.moveL(152, power);
+            robot.moveB(15, power);
+            robot.moveL(222, power);
             robot.disengageFlap();
-
-            robot.moveR(168, power);
-            robot.moveF(19, power); //14
         }
-        robot.moveR(20, power);
-        robot.moveF(40, .25);
-        robot.engageFlap();
-        robot.moveB(15, power);
-        robot.moveL(172, power);
-        robot.disengageFlap();
-
+        else {
+             robot.moveR(30, power);
+             if (robot.detectSkyStone()) {
+                 robot.moveF(40, .25);
+                 robot.engageFlap();
+                 robot.moveB(20, power); //15
+                 robot.moveL(162, power);
+                 robot.disengageFlap();
+ 
+                 robot.moveR(248, power);
+                 robot.moveF(15, power); //14
+                 robot.moveF(40, .25);
+                 robot.engageFlap();
+                 robot.moveB(15, power);
+                 robot.moveL(252, power);
+                 robot.disengageFlap();
+             } else {
+                 robot.moveR(30, power);
+                 robot.moveF(40, .25);
+                 robot.engageFlap();
+                 robot.moveB(15, power);
+                 robot.moveL(172, power);
+                 robot.disengageFlap();
+                 robot.moveR(278, power);
+                 robot.moveF(15, power); //14
+                 robot.moveF(40, .25);
+                 robot.engageFlap();
+                 robot.moveB(15, power);
+                 robot.moveL(282, power);
+                 robot.disengageFlap();
+             }
+        }
+ 
         /*
         robot.moveR(183, power);
         robot.moveF(14, power);
