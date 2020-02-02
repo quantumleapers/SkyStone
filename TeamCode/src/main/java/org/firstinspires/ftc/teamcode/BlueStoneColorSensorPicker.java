@@ -36,10 +36,11 @@ public class BlueStoneColorSensorPicker extends LinearOpMode {
         robot.disengageFlap();
         robot.engageSlider(2500);
         robot.moveF(27, power);
-        robot.moveL(52, power);
+        robot.moveL(54, power);
         //robot.moveF(28, power);
         robot.moveF(33, power);
         if (robot.detectSkyStone()) {
+            // confirmed 1st stone is a skystone
             robot.moveF(40, .25);
             robot.engageFlap();
           //  robot.moveB(15, power);
@@ -48,17 +49,18 @@ public class BlueStoneColorSensorPicker extends LinearOpMode {
             robot.disengageFlap();
 
             //robot.moveR(147, power);
-            robot.moveR(218, power); /* move to 4th stone */
+            robot.moveR(202, power); /* move to 4th stone */
             // robot.moveF(14, power);
             robot.moveF(15, power);
             robot.moveF(40, .25);
             robot.engageFlap();
             robot.moveB(15, power);
-            robot.moveL(222, power);
+            //robot.moveL(222, power);
+            robot.moveL(190, power);
             robot.disengageFlap();
         }
         else {
-             robot.moveR(30, power);
+             robot.moveR(26, power);
              if (robot.detectSkyStone()) {
                  robot.moveF(40, .25);
                  robot.engageFlap();
@@ -66,7 +68,7 @@ public class BlueStoneColorSensorPicker extends LinearOpMode {
                  robot.moveL(162, power);
                  robot.disengageFlap();
  
-                 robot.moveR(248, power);
+                 robot.moveR(220, power);
                  robot.moveF(15, power); //14
                  robot.moveF(40, .25);
                  robot.engageFlap();
