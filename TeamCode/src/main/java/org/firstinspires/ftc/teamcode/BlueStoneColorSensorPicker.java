@@ -35,7 +35,7 @@ public class BlueStoneColorSensorPicker extends LinearOpMode {
  */
         robot.disengageFlap();
         robot.engageSlider(2500);
-        robot.moveF(27, power);
+        robot.moveF(31, power);
         robot.moveL(54, power);
         //robot.moveF(28, power);
         robot.moveF(33, power);
@@ -44,17 +44,17 @@ public class BlueStoneColorSensorPicker extends LinearOpMode {
             robot.moveF(40, .25);
             robot.engageFlap();
           //  robot.moveB(15, power);
-            robot.moveB(20, power);
+            robot.moveB(23, power);
             robot.moveL(132, power);
             robot.disengageFlap();
 
             //robot.moveR(147, power);
             robot.moveR(202, power); /* move to 4th stone */
             // robot.moveF(14, power);
-            robot.moveF(15, power);
+            robot.moveF(18, power);
             robot.moveF(40, .25);
             robot.engageFlap();
-            robot.moveB(15, power);
+            robot.moveB(18, power);
             //robot.moveL(222, power);
             robot.moveL(190, power);
             robot.disengageFlap();
@@ -64,31 +64,32 @@ public class BlueStoneColorSensorPicker extends LinearOpMode {
              if (robot.detectSkyStone()) {
                  robot.moveF(40, .25);
                  robot.engageFlap();
-                 robot.moveB(20, power); //15
+                 robot.moveB(23, power); //15
                  robot.moveL(162, power);
                  robot.disengageFlap();
  
-                 robot.moveR(220, power);
-                 robot.moveF(15, power); //14
+                 robot.moveR(230, power);
+                 robot.moveF(18, power); //14
                  robot.moveF(40, .25);
                  robot.engageFlap();
-                 robot.moveB(15, power);
-                 robot.moveL(252, power);
+                 robot.moveB(18, power);
+                 robot.moveL(222, power);
                  robot.disengageFlap();
              } else {
-                 robot.moveR(30, power);
+                 robot.moveR(24, power);
                  robot.moveF(40, .25);
                  robot.engageFlap();
-                 robot.moveB(15, power);
+                 robot.moveB(23, power);
                  robot.moveL(172, power);
                  robot.disengageFlap();
-                 robot.moveR(278, power);
-                 robot.moveF(15, power); //14
+                 robot.moveR(230, power);
+                 robot.moveF(18, power); //14
                  robot.moveF(40, .25);
                  robot.engageFlap();
-                 robot.moveB(15, power);
-                 robot.moveL(282, power);
+                 robot.moveB(20, power);
+                 robot.moveL(222, power);
                  robot.disengageFlap();
+                 robot.moveR(35, power);
              }
         }
  
@@ -104,7 +105,6 @@ public class BlueStoneColorSensorPicker extends LinearOpMode {
 
 
         robot.engageSlider(-2500);
-
         robot.moveR(50, power);
         robot.moveF(12, power);
 
